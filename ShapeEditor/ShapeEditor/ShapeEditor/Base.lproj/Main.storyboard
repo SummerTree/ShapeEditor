@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Entypo.otf">
+            <string>Entypo</string>
+            <string>Entypo</string>
+            <string>Entypo</string>
+        </mutableArray>
+        <mutableArray key="Shape Blocks Solid.ttf">
+            <string>ShapeBlockSolid</string>
+            <string>ShapeBlockSolid</string>
+            <string>ShapeBlockSolid</string>
+        </mutableArray>
+    </customFonts>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h0i-ee-BwI" userLabel="ButtonsPanelView">
+                                <rect key="frame" x="16" y="20" width="288" height="40"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xkg-OC-KOX" customClass="SEButton">
+                                        <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="40" id="pD9-3N-o3k"/>
+                                            <constraint firstAttribute="height" constant="40" id="vQ8-St-8uJ"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="ShapeBlockSolid" family="Shape Blocks Solid" pointSize="35"/>
+                                        <inset key="contentEdgeInsets" minX="0.0" minY="4" maxX="0.0" maxY="0.0"/>
+                                        <state key="normal" title="t"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lRk-d2-ZWI" customClass="SEButton">
+                                        <rect key="frame" x="48" y="0.0" width="40" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="BWD-o3-Q6F"/>
+                                            <constraint firstAttribute="width" constant="40" id="ceA-dA-IQE"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="ShapeBlockSolid" family="Shape Blocks Solid" pointSize="32"/>
+                                        <inset key="contentEdgeInsets" minX="0.0" minY="8" maxX="0.0" maxY="0.0"/>
+                                        <state key="normal" title="a"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4dS-hC-taG">
+                                        <rect key="frame" x="144" y="0.0" width="40" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="40" id="KGo-EC-i2A"/>
+                                            <constraint firstAttribute="height" constant="40" id="s28-dh-0mh"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Entypo" family="Entypo" pointSize="52"/>
+                                        <state key="normal" title="("/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="htp-R9-uV0">
+                                        <rect key="frame" x="192" y="0.0" width="40" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="faS-X3-3Cp"/>
+                                            <constraint firstAttribute="width" constant="40" id="hXh-uA-Gaj"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Entypo" family="Entypo" pointSize="52"/>
+                                        <state key="normal" title="*"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yV6-7n-q9c">
+                                        <rect key="frame" x="240" y="0.0" width="40" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="iFm-5R-xW8"/>
+                                            <constraint firstAttribute="width" constant="40" id="nDA-pH-UCq"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Entypo" family="Entypo" pointSize="52"/>
+                                        <state key="normal" title="u"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zj9-KI-RUp" customClass="SEButton">
+                                        <rect key="frame" x="96" y="0.0" width="40" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="40" id="1Ig-1j-Rdj"/>
+                                            <constraint firstAttribute="height" constant="40" id="GUs-3n-6IE"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="ShapeBlockSolid" family="Shape Blocks Solid" pointSize="35"/>
+                                        <inset key="contentEdgeInsets" minX="0.0" minY="7" maxX="0.0" maxY="0.0"/>
+                                        <state key="normal" title="z"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="htp-R9-uV0" firstAttribute="top" secondItem="h0i-ee-BwI" secondAttribute="top" id="3I9-fH-ZEi"/>
+                                    <constraint firstItem="xkg-OC-KOX" firstAttribute="leading" secondItem="h0i-ee-BwI" secondAttribute="leading" id="63D-Yv-fyl"/>
+                                    <constraint firstItem="xkg-OC-KOX" firstAttribute="top" secondItem="h0i-ee-BwI" secondAttribute="top" id="8mZ-wQ-IpS"/>
+                                    <constraint firstItem="Zj9-KI-RUp" firstAttribute="top" secondItem="h0i-ee-BwI" secondAttribute="top" id="D2m-wa-vCB"/>
+                                    <constraint firstItem="htp-R9-uV0" firstAttribute="leading" secondItem="4dS-hC-taG" secondAttribute="trailing" constant="8" id="Rrr-6X-GXa"/>
+                                    <constraint firstAttribute="trailing" secondItem="yV6-7n-q9c" secondAttribute="trailing" constant="8" id="Ukp-O4-O1B"/>
+                                    <constraint firstAttribute="height" constant="40" id="UoQ-fD-hw7"/>
+                                    <constraint firstItem="Zj9-KI-RUp" firstAttribute="leading" secondItem="lRk-d2-ZWI" secondAttribute="trailing" constant="8" id="bT9-as-GxR"/>
+                                    <constraint firstItem="yV6-7n-q9c" firstAttribute="top" secondItem="h0i-ee-BwI" secondAttribute="top" id="g0X-5n-XTW"/>
+                                    <constraint firstItem="4dS-hC-taG" firstAttribute="leading" secondItem="Zj9-KI-RUp" secondAttribute="trailing" constant="8" id="seJ-QH-EpP"/>
+                                    <constraint firstItem="lRk-d2-ZWI" firstAttribute="leading" secondItem="xkg-OC-KOX" secondAttribute="trailing" constant="8" id="sih-iC-0ek"/>
+                                    <constraint firstItem="4dS-hC-taG" firstAttribute="top" secondItem="h0i-ee-BwI" secondAttribute="top" id="tYI-E8-ZTD"/>
+                                    <constraint firstItem="lRk-d2-ZWI" firstAttribute="top" secondItem="h0i-ee-BwI" secondAttribute="top" id="tkS-Py-pGF"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ceT-eV-ri5" userLabel="WorkAreaView">
+                                <rect key="frame" x="16" y="68" width="288" height="480"/>
+                                <color key="backgroundColor" red="0.92465672348484851" green="0.92465672348484851" blue="0.92465672348484851" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ceT-eV-ri5" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="YBp-3U-3sT"/>
+                            <constraint firstItem="ceT-eV-ri5" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="jKe-am-icV"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="h0i-ee-BwI" secondAttribute="trailing" id="ooN-xH-HI1"/>
+                            <constraint firstItem="ceT-eV-ri5" firstAttribute="top" secondItem="h0i-ee-BwI" secondAttribute="bottom" constant="8" id="qri-Ui-aDq"/>
+                            <constraint firstItem="h0i-ee-BwI" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="ySi-iv-gL3"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ceT-eV-ri5" secondAttribute="bottom" constant="20" id="z60-fa-S5U"/>
+                            <constraint firstItem="h0i-ee-BwI" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="20" id="zLn-Vo-bcf"/>
+                        </constraints>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+    </scenes>
+</document>
