@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -17,10 +18,10 @@
         </mutableArray>
     </customFonts>
     <scenes>
-        <!--View Controller-->
+        <!--Editor View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="EditorViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -32,7 +33,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h0i-ee-BwI" userLabel="ButtonsPanelView">
                                 <rect key="frame" x="16" y="20" width="288" height="40"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xkg-OC-KOX" customClass="SEButton">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xkg-OC-KOX" userLabel="triangleShapeBtn">
                                         <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="40" id="pD9-3N-o3k"/>
@@ -41,8 +42,11 @@
                                         <fontDescription key="fontDescription" name="ShapeBlockSolid" family="Shape Blocks Solid" pointSize="35"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="4" maxX="0.0" maxY="0.0"/>
                                         <state key="normal" title="t"/>
+                                        <connections>
+                                            <action selector="triangleShapeBtnTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ppd-Nh-99l"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lRk-d2-ZWI" customClass="SEButton">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lRk-d2-ZWI" userLabel="rectangleShapeBtn">
                                         <rect key="frame" x="48" y="0.0" width="40" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="BWD-o3-Q6F"/>
@@ -51,8 +55,11 @@
                                         <fontDescription key="fontDescription" name="ShapeBlockSolid" family="Shape Blocks Solid" pointSize="32"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="8" maxX="0.0" maxY="0.0"/>
                                         <state key="normal" title="a"/>
+                                        <connections>
+                                            <action selector="rectangleShapeBtnTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zLg-U6-huZ"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4dS-hC-taG">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4dS-hC-taG" userLabel="undoShapeBtn">
                                         <rect key="frame" x="144" y="0.0" width="40" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="40" id="KGo-EC-i2A"/>
@@ -60,8 +67,11 @@
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Entypo" family="Entypo" pointSize="52"/>
                                         <state key="normal" title="("/>
+                                        <connections>
+                                            <action selector="undoShapeBtnTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="W4s-hE-Jvv"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="htp-R9-uV0">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="htp-R9-uV0" userLabel="redoShapeBtn">
                                         <rect key="frame" x="192" y="0.0" width="40" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="faS-X3-3Cp"/>
@@ -69,8 +79,11 @@
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Entypo" family="Entypo" pointSize="52"/>
                                         <state key="normal" title="*"/>
+                                        <connections>
+                                            <action selector="redoShapeBtnTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fOs-mm-Ast"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yV6-7n-q9c">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yV6-7n-q9c" userLabel="trashShapeBtn">
                                         <rect key="frame" x="240" y="0.0" width="40" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="iFm-5R-xW8"/>
@@ -78,8 +91,11 @@
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Entypo" family="Entypo" pointSize="52"/>
                                         <state key="normal" title="u"/>
+                                        <connections>
+                                            <action selector="trashShapeBtnTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jpW-rj-DS8"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zj9-KI-RUp" customClass="SEButton">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zj9-KI-RUp" userLabel="circleShapeBtn">
                                         <rect key="frame" x="96" y="0.0" width="40" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="40" id="1Ig-1j-Rdj"/>
@@ -88,6 +104,9 @@
                                         <fontDescription key="fontDescription" name="ShapeBlockSolid" family="Shape Blocks Solid" pointSize="35"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="7" maxX="0.0" maxY="0.0"/>
                                         <state key="normal" title="z"/>
+                                        <connections>
+                                            <action selector="circleShapeBtnTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8sl-P6-kKD"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -114,16 +133,19 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ceT-eV-ri5" secondAttribute="bottom" constant="20" id="CGB-uj-5XZ"/>
                             <constraint firstItem="ceT-eV-ri5" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="YBp-3U-3sT"/>
                             <constraint firstItem="ceT-eV-ri5" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="jKe-am-icV"/>
                             <constraint firstAttribute="trailingMargin" secondItem="h0i-ee-BwI" secondAttribute="trailing" id="ooN-xH-HI1"/>
                             <constraint firstItem="ceT-eV-ri5" firstAttribute="top" secondItem="h0i-ee-BwI" secondAttribute="bottom" constant="8" id="qri-Ui-aDq"/>
                             <constraint firstItem="h0i-ee-BwI" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="ySi-iv-gL3"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ceT-eV-ri5" secondAttribute="bottom" constant="20" id="z60-fa-S5U"/>
                             <constraint firstItem="h0i-ee-BwI" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="20" id="zLn-Vo-bcf"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="workAreaView" destination="ceT-eV-ri5" id="yQf-e3-HDc"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

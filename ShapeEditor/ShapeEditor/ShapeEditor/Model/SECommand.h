@@ -7,7 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SEWorkArea.h"
 
-@interface SECommand : NSObject
+@interface SECommand : NSObject {
+    SEWorkArea *_workArea;
+    SEShape *_shape;
+}
+
+- (void)execute;
+- (void)rollback;
 
 @end

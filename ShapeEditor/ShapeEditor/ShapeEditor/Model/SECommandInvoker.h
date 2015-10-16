@@ -7,7 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SECommand.h"
+#import "HStack.h"
 
-@interface SECommandInvoker : NSObject
+@interface SECommandInvoker : NSObject 
+
++ (SECommandInvoker *)sharedInstance;
+
+- (BOOL)hasRedoCommands;
+- (BOOL)hasUndoCommands;
+
+- (void)addCommandAndExecute:(SECommand *)command;
+- (void)redoCommand;
+- (void)undoCommand;
 
 @end

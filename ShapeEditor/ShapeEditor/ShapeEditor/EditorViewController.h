@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SEWorkArea.h"
 
-@interface ViewController : UIViewController
+@interface EditorViewController : UIViewController <SEWorkAreaDelegate>
 
 
 @end

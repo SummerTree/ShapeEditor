@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		F96C5E411BCFDB8F008B833C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F96C5E401BCFDB8F008B833C /* main.m */; };
 		F96C5E441BCFDB8F008B833C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F96C5E431BCFDB8F008B833C /* AppDelegate.m */; };
-		F96C5E471BCFDB8F008B833C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F96C5E461BCFDB8F008B833C /* ViewController.m */; };
+		F96C5E471BCFDB8F008B833C /* EditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F96C5E461BCFDB8F008B833C /* EditorViewController.m */; };
 		F96C5E4A1BCFDB8F008B833C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F96C5E481BCFDB8F008B833C /* Main.storyboard */; };
 		F96C5E4C1BCFDB8F008B833C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F96C5E4B1BCFDB8F008B833C /* Images.xcassets */; };
 		F96C5E4F1BCFDB90008B833C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F96C5E4D1BCFDB90008B833C /* LaunchScreen.xib */; };
@@ -20,6 +20,11 @@
 		F96C5E741BD025F3008B833C /* SEWorkArea.m in Sources */ = {isa = PBXBuildFile; fileRef = F96C5E731BD025F3008B833C /* SEWorkArea.m */; };
 		F96C5E771BD02619008B833C /* SECommand.m in Sources */ = {isa = PBXBuildFile; fileRef = F96C5E761BD02619008B833C /* SECommand.m */; };
 		F96C5E7D1BD026A9008B833C /* SECommandInvoker.m in Sources */ = {isa = PBXBuildFile; fileRef = F96C5E7C1BD026A9008B833C /* SECommandInvoker.m */; };
+		F96C5E821BD0E039008B833C /* SECommandAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = F96C5E811BD0E039008B833C /* SECommandAdd.m */; };
+		F96C5E851BD0F1D6008B833C /* SECommandRemove.m in Sources */ = {isa = PBXBuildFile; fileRef = F96C5E841BD0F1D6008B833C /* SECommandRemove.m */; };
+		F96C5E891BD10095008B833C /* HStack.m in Sources */ = {isa = PBXBuildFile; fileRef = F96C5E881BD10095008B833C /* HStack.m */; };
+		F96C5E8F1BD1263A008B833C /* SECommandModify.m in Sources */ = {isa = PBXBuildFile; fileRef = F96C5E8E1BD1263A008B833C /* SECommandModify.m */; };
+		F96C5E931BD13472008B833C /* SEShapeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F96C5E921BD13472008B833C /* SEShapeView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,8 +43,8 @@
 		F96C5E401BCFDB8F008B833C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F96C5E421BCFDB8F008B833C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		F96C5E431BCFDB8F008B833C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		F96C5E451BCFDB8F008B833C /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		F96C5E461BCFDB8F008B833C /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		F96C5E451BCFDB8F008B833C /* EditorViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditorViewController.h; sourceTree = "<group>"; };
+		F96C5E461BCFDB8F008B833C /* EditorViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditorViewController.m; sourceTree = "<group>"; };
 		F96C5E491BCFDB8F008B833C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F96C5E4B1BCFDB8F008B833C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F96C5E4E1BCFDB90008B833C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -56,6 +61,17 @@
 		F96C5E761BD02619008B833C /* SECommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SECommand.m; sourceTree = "<group>"; };
 		F96C5E7B1BD026A9008B833C /* SECommandInvoker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SECommandInvoker.h; sourceTree = "<group>"; };
 		F96C5E7C1BD026A9008B833C /* SECommandInvoker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SECommandInvoker.m; sourceTree = "<group>"; };
+		F96C5E7F1BD0463F008B833C /* ShapeEditor-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ShapeEditor-Prefix.pch"; sourceTree = "<group>"; };
+		F96C5E801BD0E039008B833C /* SECommandAdd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SECommandAdd.h; sourceTree = "<group>"; };
+		F96C5E811BD0E039008B833C /* SECommandAdd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SECommandAdd.m; sourceTree = "<group>"; };
+		F96C5E831BD0F1D6008B833C /* SECommandRemove.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SECommandRemove.h; sourceTree = "<group>"; };
+		F96C5E841BD0F1D6008B833C /* SECommandRemove.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SECommandRemove.m; sourceTree = "<group>"; };
+		F96C5E871BD10095008B833C /* HStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HStack.h; path = Helpers/HStack.h; sourceTree = "<group>"; };
+		F96C5E881BD10095008B833C /* HStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HStack.m; path = Helpers/HStack.m; sourceTree = "<group>"; };
+		F96C5E8D1BD1263A008B833C /* SECommandModify.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SECommandModify.h; sourceTree = "<group>"; };
+		F96C5E8E1BD1263A008B833C /* SECommandModify.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SECommandModify.m; sourceTree = "<group>"; };
+		F96C5E911BD13472008B833C /* SEShapeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SEShapeView.h; path = UI/SEShapeView.h; sourceTree = "<group>"; };
+		F96C5E921BD13472008B833C /* SEShapeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SEShapeView.m; path = UI/SEShapeView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,12 +113,12 @@
 		F96C5E3D1BCFDB8F008B833C /* ShapeEditor */ = {
 			isa = PBXGroup;
 			children = (
+				F96C5E901BD13437008B833C /* UI */,
+				F96C5E7E1BD0366A008B833C /* Controller */,
 				F96C5E6E1BD0251F008B833C /* Model */,
 				F96C5E681BCFE663008B833C /* Resources */,
 				F96C5E421BCFDB8F008B833C /* AppDelegate.h */,
 				F96C5E431BCFDB8F008B833C /* AppDelegate.m */,
-				F96C5E451BCFDB8F008B833C /* ViewController.h */,
-				F96C5E461BCFDB8F008B833C /* ViewController.m */,
 				F96C5E481BCFDB8F008B833C /* Main.storyboard */,
 				F96C5E4B1BCFDB8F008B833C /* Images.xcassets */,
 				F96C5E4D1BCFDB90008B833C /* LaunchScreen.xib */,
@@ -116,6 +132,7 @@
 			children = (
 				F96C5E3F1BCFDB8F008B833C /* Info.plist */,
 				F96C5E401BCFDB8F008B833C /* main.m */,
+				F96C5E7F1BD0463F008B833C /* ShapeEditor-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -157,16 +174,50 @@
 		F96C5E6E1BD0251F008B833C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				F96C5E861BD1003E008B833C /* Helpers */,
 				F96C5E6F1BD025A0008B833C /* SEShape.h */,
 				F96C5E701BD025A0008B833C /* SEShape.m */,
 				F96C5E721BD025F3008B833C /* SEWorkArea.h */,
 				F96C5E731BD025F3008B833C /* SEWorkArea.m */,
 				F96C5E751BD02619008B833C /* SECommand.h */,
 				F96C5E761BD02619008B833C /* SECommand.m */,
+				F96C5E801BD0E039008B833C /* SECommandAdd.h */,
+				F96C5E811BD0E039008B833C /* SECommandAdd.m */,
+				F96C5E831BD0F1D6008B833C /* SECommandRemove.h */,
+				F96C5E841BD0F1D6008B833C /* SECommandRemove.m */,
+				F96C5E8D1BD1263A008B833C /* SECommandModify.h */,
+				F96C5E8E1BD1263A008B833C /* SECommandModify.m */,
 				F96C5E7B1BD026A9008B833C /* SECommandInvoker.h */,
 				F96C5E7C1BD026A9008B833C /* SECommandInvoker.m */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		F96C5E7E1BD0366A008B833C /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				F96C5E451BCFDB8F008B833C /* EditorViewController.h */,
+				F96C5E461BCFDB8F008B833C /* EditorViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		F96C5E861BD1003E008B833C /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				F96C5E871BD10095008B833C /* HStack.h */,
+				F96C5E881BD10095008B833C /* HStack.m */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
+		F96C5E901BD13437008B833C /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				F96C5E911BD13472008B833C /* SEShapeView.h */,
+				F96C5E921BD13472008B833C /* SEShapeView.m */,
+			);
+			name = UI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -271,10 +322,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F96C5E471BCFDB8F008B833C /* ViewController.m in Sources */,
+				F96C5E471BCFDB8F008B833C /* EditorViewController.m in Sources */,
+				F96C5E8F1BD1263A008B833C /* SECommandModify.m in Sources */,
+				F96C5E891BD10095008B833C /* HStack.m in Sources */,
+				F96C5E851BD0F1D6008B833C /* SECommandRemove.m in Sources */,
+				F96C5E821BD0E039008B833C /* SECommandAdd.m in Sources */,
 				F96C5E771BD02619008B833C /* SECommand.m in Sources */,
 				F96C5E711BD025A0008B833C /* SEShape.m in Sources */,
 				F96C5E441BCFDB8F008B833C /* AppDelegate.m in Sources */,
+				F96C5E931BD13472008B833C /* SEShapeView.m in Sources */,
 				F96C5E7D1BD026A9008B833C /* SECommandInvoker.m in Sources */,
 				F96C5E741BD025F3008B833C /* SEWorkArea.m in Sources */,
 				F96C5E411BCFDB8F008B833C /* main.m in Sources */,
@@ -355,7 +411,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -393,7 +449,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -406,6 +462,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ShapeEditor/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -416,6 +473,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ShapeEditor/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

@@ -7,7 +7,18 @@
 //
 
 #import "SECommand.h"
+#import "SEWorkArea.h"
 
 @implementation SECommand
+
+- (void)execute
+{
+    [NSException raise:@"Invoked abstract method" format:@"Invoked abstract method"]; 
+}
+
+- (void)rollback
+{
+    [NSException raise:@"Invoked abstract method" format:@"Invoked abstract method"];     
+}
 
 @end
