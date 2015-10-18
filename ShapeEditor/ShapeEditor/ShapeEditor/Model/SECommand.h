@@ -11,8 +11,9 @@
 
 @interface SECommand : NSObject {
     SEWorkArea *_workArea;
-    SEShape *_shape;
 }
+
+@property (nonatomic, strong) SEShape *shape;
 
 - (void)execute;
 - (void)rollback;

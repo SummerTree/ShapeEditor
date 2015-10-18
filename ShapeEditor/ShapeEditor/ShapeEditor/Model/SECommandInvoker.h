@@ -21,4 +21,7 @@
 - (void)redoCommand;
 - (void)undoCommand;
 
+- (id)currentCommand;
+- (id)previousCommand;
+
 @end

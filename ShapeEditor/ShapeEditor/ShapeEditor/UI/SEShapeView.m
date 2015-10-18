@@ -45,8 +45,9 @@
 
 - (void)updateViewWithShape:(SEShape *)shape
 {
-    self.frame = CGRectMake(shape.position.x, shape.position.y, shape.size.width, shape.size.height);
-    [self setNeedsDisplay];
+    [UIView animateWithDuration:0.3 animations:^{
+        self.frame = CGRectMake(shape.position.x, shape.position.y, shape.size.width, shape.size.height);
+    }];
 }
 
 #pragma mark - misc

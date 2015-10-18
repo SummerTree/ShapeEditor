@@ -9,6 +9,7 @@
 #import "SECommandRemove.h"
 
 @implementation SECommandRemove
+@synthesize shape = _shape;
 
 - (SECommand *)initWithWorkArea:(SEWorkArea *)workArea
                        andShape:(SEShape *)shape

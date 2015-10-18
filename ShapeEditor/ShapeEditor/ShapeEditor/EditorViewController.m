@@ -139,15 +139,28 @@
         //add shape view
         SEShapeView *newShapeView = [self shapeViewForShape:shape];
         newShapeView.delegate = self;
-        
+        newShapeView.alpha = 0;
         [self.workAreaView addSubview:newShapeView];
+        
+        [UIView animateWithDuration:0.3 animations:^{
+            newShapeView.alpha = 1;
+        }];
     }
 }
 
 - (void)hideShapeViewWithIndex:(NSUInteger)idx
 {
     SEShapeView *shapeView = [self findShapeViewWithIndex:idx];
-    [shapeView removeFromSuperview];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        shapeView.alpha = 0;
+    } completion:^(BOOL finished) {
+        [shapeView removeFromSuperview];
+    }];
+    
+    //find previuos command shape and select it
+    SECommand *command = [self.commandInvoker previousCommand];
+    [self.workArea updateShape:command.shape withState:YES];
 }
 
 #pragma mark - SEShapeViewDelegate

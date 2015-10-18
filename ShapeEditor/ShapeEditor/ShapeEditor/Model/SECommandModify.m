@@ -10,6 +10,7 @@
 #import "SECommandModify.h"
 
 @implementation SECommandModify
+@synthesize shape = _shape;
 
 - (SECommand *)initWithWorkArea:(SEWorkArea *)workArea
                        andShape:(SEShape *)shape

@@ -39,11 +39,6 @@
 
 #pragma mark - misc
 
-- (id)currentCommand
-{
-    return [_commandStack itemAtIndex:_currentCommandIndex - 1];
-}
-
 - (void)clearCommandsBeforeInsert
 {
     if ([self hasRedoCommands])
@@ -84,6 +79,17 @@
         [[self currentCommand] rollback];
         _currentCommandIndex--;
     }
+}
+
+- (id)currentCommand
+{
+    return [_commandStack itemAtIndex:_currentCommandIndex - 1];
+}
+
+
+- (id)previousCommand
+{
+    return (_currentCommandIndex > 1)? [_commandStack itemAtIndex:_currentCommandIndex - 2]: nil;
 }
 
 @end

@@ -9,6 +9,7 @@
 #import "SECommandAdd.h"
 
 @implementation SECommandAdd
+@synthesize shape = _shape;
 
 - (SECommand *)initWithWorkArea:(SEWorkArea *)workArea
                        andShape:(SEShape *)shape;
