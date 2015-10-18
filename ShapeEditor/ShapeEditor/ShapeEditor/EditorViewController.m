@@ -11,7 +11,10 @@
 #import "SEWorkArea.h"
 #import "SECommandAdd.h"
 #import "SECommandRemove.h"
-#import "SEShapeView.h"
+#import "SECommandModify.h"
+#import "SETriangleShapeView.h"
+#import "SECircleShapeView.h"
+#import "SERectangleShapeView.h"
 
 @interface EditorViewController ()
 
@@ -40,7 +43,9 @@
 
 - (void)commandAddForShapeWithType:(SEShapeType)shapeType
 {
-    SEShape *shape = [[SEShape alloc] initWithType:shapeType];
+    CGPoint workAreaViewCenter = CGPointMake(self.workAreaView.center.x - kShapeSizeWidth / 2.0,
+                                             self.workAreaView.center.y - kShapeSizeHeight / 2.0);
+    SEShape *shape = [[SEShape alloc] initWithType:shapeType position:workAreaViewCenter];
     SECommandAdd *command = [[SECommandAdd alloc] initWithWorkArea:self.workArea andShape:shape];
     [self.commandInvoker addCommandAndExecute:command];
 }
@@ -67,45 +72,109 @@
 
 - (IBAction)trashShapeBtnTap:(UIButton *)sender {
     SEShape *selectedShape = [self.workArea selectedShape];
-    SECommandRemove *command = [[SECommandRemove alloc] initWithWorkArea:self.workArea andShape:selectedShape];
-    [self.commandInvoker addCommandAndExecute:command];
-}
-
-- (void)modifyShape:(SEShape *)shape toShape:(SEShape *)shape
-{
     
+    if (selectedShape) {
+        SECommandRemove *command = [[SECommandRemove alloc] initWithWorkArea:self.workArea andShape:selectedShape];
+        [self.commandInvoker addCommandAndExecute:command];
+    }
 }
 
-#pragma mark - SEWorkAreaDelegate
+#pragma mark - workarea control
 
-- (void)updateAllShapeViews
+- (SEShapeView *)findShapeViewWithIndex:(NSUInteger)index
 {
-    
-}
-
-- (void)showShapeViewWithIndex:(NSUInteger)idx
-{
-    __block UIView *shapeView = nil;
+    __block SEShapeView *shapeView = nil;
     NSArray *mViews = [self.workAreaView subviews];
     
     [mViews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         SEShapeView *view = (SEShapeView *)obj;
-        if (view.layer.zPosition == idx) {
+        if (view.shape.index == index) {
             shapeView = view;
             *stop = YES;
         }
     }];
     
+    return shapeView;
+}
+
+- (SEShapeView *)shapeViewForShape:(SEShape *)shape
+{
+    switch (shape.type) {
+        case SEShapeTypeTriangle:
+            return [[SETriangleShapeView alloc] initWithShape:shape];
+            break;
+        case SEShapeTypeCircle:
+            return [[SECircleShapeView alloc] initWithShape:shape];
+            break;
+        case SEShapeTypeRectangle:
+            return [[SERectangleShapeView alloc] initWithShape:shape];
+            break;
+            
+        default:
+            break;
+    }
+    
+    return nil;
+}
+
+
+#pragma mark - SEWorkAreaDelegate
+
+- (void)updateAllShapeViews
+{
+    [self.workAreaView.subviews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [(UIView *)obj setNeedsDisplay];
+    }];
+}
+
+- (void)showShapeViewWithIndex:(NSUInteger)idx
+{
+    SEShape *shape = [self.workArea shapeWithIndex:idx];
+    SEShapeView *shapeView = [self findShapeViewWithIndex:shape.index];
+    
     if (shapeView) {
         //update shape view and redraw
+        [shapeView updateViewWithShape:shape];
     } else {
         //add shape view
+        SEShapeView *newShapeView = [self shapeViewForShape:shape];
+        newShapeView.delegate = self;
+        
+        [self.workAreaView addSubview:newShapeView];
     }
 }
 
 - (void)hideShapeViewWithIndex:(NSUInteger)idx
 {
+    SEShapeView *shapeView = [self findShapeViewWithIndex:idx];
+    [shapeView removeFromSuperview];
+}
+
+#pragma mark - SEShapeViewDelegate
+
+- (void)shapeTapped:(SEShape *)shape selected:(BOOL)selected
+{
+    [self.workArea updateShape:shape withState:selected];
+}
+
+- (void)shapeMoved:(SEShape *)shape position:(CGPoint)position
+{
+    NSDictionary *params = [NSDictionary dictionaryWithObject:[NSValue valueWithCGPoint:position]
+                                                       forKey:kSEShapeParamPosition];
     
+    SECommandModify *command = [[SECommandModify alloc] initWithWorkArea:self.workArea andShape:shape andNewParams:params];
+    [self.commandInvoker addCommandAndExecute:command];
+}
+
+- (void)shapeMoved:(SEShape *)shape withSize:(CGSize)size andPosition:(CGPoint)position
+{
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            [NSValue valueWithCGPoint:position], kSEShapeParamPosition,
+                            [NSValue valueWithCGSize:size], kSEShapeParamSize,
+                            nil];
+    
+    SECommandModify *command = [[SECommandModify alloc] initWithWorkArea:self.workArea andShape:shape andNewParams:params];
+    [self.commandInvoker addCommandAndExecute:command];
 }
 
 @end

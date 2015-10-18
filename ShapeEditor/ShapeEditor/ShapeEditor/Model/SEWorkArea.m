@@ -6,12 +6,13 @@
 //  Copyright (c) 2015 iSpring. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
 #import "SEWorkArea.h"
 
 @interface SEWorkArea()
 
 @property (nonatomic, strong) NSMutableArray *shapes;
-@property (nonatomic, assign) NSUInteger maxZOrderNum;
+@property (nonatomic, assign) NSUInteger maxIndexNum;
 
 @end
 
@@ -31,7 +32,7 @@
 {
     if (self = [super init]) {
         self.shapes = [NSMutableArray array];
-        self.maxZOrderNum = 0;
+        self.maxIndexNum = 0;
     }
     
     return self;
@@ -41,39 +42,41 @@
 
 - (SEShape *)selectedShape
 {
-    __block SEShape *selectedShape = nil;
-    [self.shapes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        SEShape *shape = (SEShape *)obj;
-        if (shape.selected) {
-            selectedShape = shape;
-            *stop = true;
-        }
-    }];
-    
-    return selectedShape;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.selected = YES"];
+    return [[self.shapes filteredArrayUsingPredicate:predicate] firstObject];
 }
 
-- (NSUInteger)currentIndexOfShape:(SEShape *)shape
+- (SEShape *)shapeWithIndex:(NSUInteger)idx
 {
-    return [self.shapes indexOfObject:shape];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.index = %d", idx];
+    return [[self.shapes filteredArrayUsingPredicate:predicate] firstObject];
 }
 
-- (NSUInteger)nextZOrderNum
+- (NSUInteger)nextIndexNum
 {
-    return ++_maxZOrderNum;
+    return ++_maxIndexNum;
 }
 
-- (void)showShapeWithIndex:(NSUInteger)index
+- (void)refreshAllShapes
 {
-    if ([self.delegate respondsToSelector:@selector(showShapeViewWithIndex:)]) {
-        [self.delegate showShapeViewWithIndex:index];
+    if ([self.delegate respondsToSelector:@selector(updateAllShapeViews)]) {
+        [self.delegate updateAllShapeViews];
     }
 }
 
-- (void)hideShapeWithIndex:(NSUInteger)index
+- (void)showViewShape:(SEShape *)shape withSelect:(BOOL)needSelect
+{
+    if ([self.delegate respondsToSelector:@selector(showShapeViewWithIndex:)]) {
+        [self.delegate showShapeViewWithIndex:shape.index];
+    }
+    
+    if (needSelect) [self updateShape:shape withState:YES];
+}
+
+- (void)hideViewShape:(SEShape *)shape
 {
     if ([self.delegate respondsToSelector:@selector(hideShapeViewWithIndex:)]) {
-        [self.delegate hideShapeViewWithIndex:index];
+        [self.delegate hideShapeViewWithIndex:shape.index];
     }
 }
 
@@ -81,50 +84,85 @@
 
 - (void)addShape:(SEShape *)shape
 {
-    shape.zOrder = [self nextZOrderNum];
+    shape.index = [self nextIndexNum];
     [self.shapes addObject:shape];
-    [self showShapeWithIndex:[self.shapes count] - 1];
-}
-
-- (void)addShape:(SEShape *)shape atIndex:(NSUInteger)atIndex
-{
-    shape.zOrder = [self nextZOrderNum];
-    [self.shapes insertObject:shape atIndex:atIndex];
-    [self showShapeWithIndex:atIndex];
+    [self showViewShape:shape withSelect:YES];
 }
 
 - (void)removeShape:(SEShape *)shape
 {
     NSUInteger idx = [self.shapes indexOfObject:shape];
     if (idx != NSNotFound) {
+        shape.selected = NO;
         [self.shapes removeObjectAtIndex:idx];
-        [self hideShapeWithIndex:idx];
+        [self hideViewShape:shape];
     }
 }
 
-- (void)replaceShape:(SEShape *)shape withShape:(SEShape *)newShape
+- (void)returnShape:(SEShape *)shape
 {
-    NSUInteger idx = [self currentIndexOfShape:shape];
-    if (idx != NSNotFound) {
-        [self.shapes replaceObjectAtIndex:idx withObject:newShape];
-        [self showShapeWithIndex:idx];
+    int idxForInsert = -1;
+    
+    if ([self.shapes count]) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.index > %d", shape.index];
+        SEShape *nextShape = [[self.shapes filteredArrayUsingPredicate:predicate] firstObject];
+        
+        if (nextShape) idxForInsert = [self.shapes indexOfObject:nextShape];
     }
+    
+    if (idxForInsert >= 0) {
+        [self.shapes insertObject:shape atIndex:idxForInsert];
+    } else {
+        [self.shapes addObject:shape];
+    }
+    
+    [self showViewShape:shape withSelect:YES];
 }
 
-- (void)changeShape:(SEShape *)shape withState:(BOOL)selected
+#pragma mark - shape update
+
+- (void)updateShape:(SEShape *)shape withParams:(NSDictionary *)params
+{
+    NSValue *val = [params objectForKey:kSEShapeParamPosition];
+    if (val) shape.position = [val CGPointValue];
+    
+    val = [params objectForKey:kSEShapeParamSize];
+    if (val) shape.size = [val CGSizeValue];
+    
+    [self showViewShape:shape withSelect:YES];
+}
+
+- (void)updateShape:(SEShape *)shape withState:(BOOL)selected
 {
     shape.selected = selected;
     
     [self.shapes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         SEShape *shapeObj = (SEShape *)obj;
-        if (shape != shapeObj) {
-            shapeObj.selected = false;
+        if (shape.index != shapeObj.index) {
+            shapeObj.selected = NO;
         }
     }];
     
-    if ([self.delegate respondsToSelector:@selector(updateAllShapeViews)]) {
-        [self.delegate updateAllShapeViews];
-    }
+    [self refreshAllShapes];
+}
+
+- (void)updateShape:(SEShape *)shape withPosition:(CGPoint)position
+{
+    shape.position = position;
+    [self showViewShape:shape withSelect:YES];
+}
+
+- (void)updateShape:(SEShape *)shape withSize:(CGSize)size
+{
+    shape.size = size;
+    [self showViewShape:shape withSelect:YES];
+}
+
+- (void)updateShape:(SEShape *)shape withSize:(CGSize)size andPosition:(CGPoint)position
+{
+    shape.size = size;
+    shape.position = position;
+    [self showViewShape:shape withSelect:YES];
 }
 
 

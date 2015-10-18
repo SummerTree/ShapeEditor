@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "SEWorkArea.h"
+#import "SEShapeView.h"
 
-@interface EditorViewController : UIViewController <SEWorkAreaDelegate>
+@interface EditorViewController : UIViewController <SEWorkAreaDelegate, SEShapeViewDelegate>
 
 
 @end

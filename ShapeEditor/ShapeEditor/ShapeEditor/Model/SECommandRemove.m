@@ -8,12 +8,6 @@
 
 #import "SECommandRemove.h"
 
-@interface SECommandRemove() {
-    NSUInteger _atIndex;
-}
-
-@end
-
 @implementation SECommandRemove
 
 - (SECommand *)initWithWorkArea:(SEWorkArea *)workArea
@@ -29,13 +23,12 @@
 
 - (void)execute
 {
-    _atIndex = [_workArea currentIndexOfShape:_shape];
     [_workArea removeShape:_shape];
 }
 
 - (void)rollback
 {
-    [_workArea addShape:_shape atIndex:_atIndex];
+    [_workArea returnShape:_shape];
 }
 
 @end

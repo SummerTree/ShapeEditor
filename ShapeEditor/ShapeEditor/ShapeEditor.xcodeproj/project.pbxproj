@@ -25,6 +25,11 @@
 		F96C5E891BD10095008B833C /* HStack.m in Sources */ = {isa = PBXBuildFile; fileRef = F96C5E881BD10095008B833C /* HStack.m */; };
 		F96C5E8F1BD1263A008B833C /* SECommandModify.m in Sources */ = {isa = PBXBuildFile; fileRef = F96C5E8E1BD1263A008B833C /* SECommandModify.m */; };
 		F96C5E931BD13472008B833C /* SEShapeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F96C5E921BD13472008B833C /* SEShapeView.m */; };
+		F96C5E961BD24E96008B833C /* SETriangleShapeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F96C5E951BD24E96008B833C /* SETriangleShapeView.m */; };
+		F96C5E991BD2520B008B833C /* SECircleShapeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F96C5E981BD2520B008B833C /* SECircleShapeView.m */; };
+		F96C5E9C1BD25229008B833C /* SERectangleShapeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F96C5E9B1BD25229008B833C /* SERectangleShapeView.m */; };
+		F96C5EA11BD26BE9008B833C /* UIColor+ShapeColor.m in Sources */ = {isa = PBXBuildFile; fileRef = F96C5EA01BD26BE9008B833C /* UIColor+ShapeColor.m */; };
+		F96C5EA41BD273FF008B833C /* UIView+Extended.m in Sources */ = {isa = PBXBuildFile; fileRef = F96C5EA31BD273FF008B833C /* UIView+Extended.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,7 +66,6 @@
 		F96C5E761BD02619008B833C /* SECommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SECommand.m; sourceTree = "<group>"; };
 		F96C5E7B1BD026A9008B833C /* SECommandInvoker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SECommandInvoker.h; sourceTree = "<group>"; };
 		F96C5E7C1BD026A9008B833C /* SECommandInvoker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SECommandInvoker.m; sourceTree = "<group>"; };
-		F96C5E7F1BD0463F008B833C /* ShapeEditor-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ShapeEditor-Prefix.pch"; sourceTree = "<group>"; };
 		F96C5E801BD0E039008B833C /* SECommandAdd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SECommandAdd.h; sourceTree = "<group>"; };
 		F96C5E811BD0E039008B833C /* SECommandAdd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SECommandAdd.m; sourceTree = "<group>"; };
 		F96C5E831BD0F1D6008B833C /* SECommandRemove.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SECommandRemove.h; sourceTree = "<group>"; };
@@ -72,6 +76,16 @@
 		F96C5E8E1BD1263A008B833C /* SECommandModify.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SECommandModify.m; sourceTree = "<group>"; };
 		F96C5E911BD13472008B833C /* SEShapeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SEShapeView.h; path = UI/SEShapeView.h; sourceTree = "<group>"; };
 		F96C5E921BD13472008B833C /* SEShapeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SEShapeView.m; path = UI/SEShapeView.m; sourceTree = "<group>"; };
+		F96C5E941BD24E96008B833C /* SETriangleShapeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SETriangleShapeView.h; path = UI/SETriangleShapeView.h; sourceTree = "<group>"; };
+		F96C5E951BD24E96008B833C /* SETriangleShapeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SETriangleShapeView.m; path = UI/SETriangleShapeView.m; sourceTree = "<group>"; };
+		F96C5E971BD2520B008B833C /* SECircleShapeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SECircleShapeView.h; path = UI/SECircleShapeView.h; sourceTree = "<group>"; };
+		F96C5E981BD2520B008B833C /* SECircleShapeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SECircleShapeView.m; path = UI/SECircleShapeView.m; sourceTree = "<group>"; };
+		F96C5E9A1BD25229008B833C /* SERectangleShapeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SERectangleShapeView.h; path = UI/SERectangleShapeView.h; sourceTree = "<group>"; };
+		F96C5E9B1BD25229008B833C /* SERectangleShapeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SERectangleShapeView.m; path = UI/SERectangleShapeView.m; sourceTree = "<group>"; };
+		F96C5E9F1BD26BE9008B833C /* UIColor+ShapeColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+ShapeColor.h"; path = "Category/UIColor+ShapeColor.h"; sourceTree = "<group>"; };
+		F96C5EA01BD26BE9008B833C /* UIColor+ShapeColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+ShapeColor.m"; path = "Category/UIColor+ShapeColor.m"; sourceTree = "<group>"; };
+		F96C5EA21BD273FF008B833C /* UIView+Extended.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Extended.h"; path = "Category/UIView+Extended.h"; sourceTree = "<group>"; };
+		F96C5EA31BD273FF008B833C /* UIView+Extended.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Extended.m"; path = "Category/UIView+Extended.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +127,7 @@
 		F96C5E3D1BCFDB8F008B833C /* ShapeEditor */ = {
 			isa = PBXGroup;
 			children = (
+				F96C5E9E1BD26B58008B833C /* Category */,
 				F96C5E901BD13437008B833C /* UI */,
 				F96C5E7E1BD0366A008B833C /* Controller */,
 				F96C5E6E1BD0251F008B833C /* Model */,
@@ -132,7 +147,6 @@
 			children = (
 				F96C5E3F1BCFDB8F008B833C /* Info.plist */,
 				F96C5E401BCFDB8F008B833C /* main.m */,
-				F96C5E7F1BD0463F008B833C /* ShapeEditor-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -216,8 +230,25 @@
 			children = (
 				F96C5E911BD13472008B833C /* SEShapeView.h */,
 				F96C5E921BD13472008B833C /* SEShapeView.m */,
+				F96C5E941BD24E96008B833C /* SETriangleShapeView.h */,
+				F96C5E951BD24E96008B833C /* SETriangleShapeView.m */,
+				F96C5E971BD2520B008B833C /* SECircleShapeView.h */,
+				F96C5E981BD2520B008B833C /* SECircleShapeView.m */,
+				F96C5E9A1BD25229008B833C /* SERectangleShapeView.h */,
+				F96C5E9B1BD25229008B833C /* SERectangleShapeView.m */,
 			);
 			name = UI;
+			sourceTree = "<group>";
+		};
+		F96C5E9E1BD26B58008B833C /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				F96C5E9F1BD26BE9008B833C /* UIColor+ShapeColor.h */,
+				F96C5EA01BD26BE9008B833C /* UIColor+ShapeColor.m */,
+				F96C5EA21BD273FF008B833C /* UIView+Extended.h */,
+				F96C5EA31BD273FF008B833C /* UIView+Extended.m */,
+			);
+			name = Category;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -322,17 +353,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F96C5E961BD24E96008B833C /* SETriangleShapeView.m in Sources */,
 				F96C5E471BCFDB8F008B833C /* EditorViewController.m in Sources */,
 				F96C5E8F1BD1263A008B833C /* SECommandModify.m in Sources */,
 				F96C5E891BD10095008B833C /* HStack.m in Sources */,
 				F96C5E851BD0F1D6008B833C /* SECommandRemove.m in Sources */,
+				F96C5E9C1BD25229008B833C /* SERectangleShapeView.m in Sources */,
 				F96C5E821BD0E039008B833C /* SECommandAdd.m in Sources */,
+				F96C5EA11BD26BE9008B833C /* UIColor+ShapeColor.m in Sources */,
 				F96C5E771BD02619008B833C /* SECommand.m in Sources */,
 				F96C5E711BD025A0008B833C /* SEShape.m in Sources */,
 				F96C5E441BCFDB8F008B833C /* AppDelegate.m in Sources */,
 				F96C5E931BD13472008B833C /* SEShapeView.m in Sources */,
 				F96C5E7D1BD026A9008B833C /* SECommandInvoker.m in Sources */,
 				F96C5E741BD025F3008B833C /* SEWorkArea.m in Sources */,
+				F96C5E991BD2520B008B833C /* SECircleShapeView.m in Sources */,
+				F96C5EA41BD273FF008B833C /* UIView+Extended.m in Sources */,
 				F96C5E411BCFDB8F008B833C /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -400,6 +436,7 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -443,6 +480,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -461,6 +499,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = ShapeEditor/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -472,6 +511,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = ShapeEditor/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

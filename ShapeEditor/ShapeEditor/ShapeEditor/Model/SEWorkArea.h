@@ -25,12 +25,16 @@
 + (SEWorkArea *)sharedInstance;
 
 - (SEShape *)selectedShape;
-- (NSUInteger)currentIndexOfShape:(SEShape *)shape;
+- (SEShape *)shapeWithIndex:(NSUInteger)idx;
 
 - (void)addShape:(SEShape *)shape;
-- (void)addShape:(SEShape *)shape atIndex:(NSUInteger)atIndex;
 - (void)removeShape:(SEShape *)shape;
-- (void)replaceShape:(SEShape *)shape withShape:(SEShape *)newShape;
-- (void)changeShape:(SEShape *)shape withState:(BOOL)selected;
+- (void)returnShape:(SEShape *)shape;
+
+- (void)updateShape:(SEShape *)shape withParams:(NSDictionary *)params;
+- (void)updateShape:(SEShape *)shape withState:(BOOL)selected;
+- (void)updateShape:(SEShape *)shape withPosition:(CGPoint)position;
+- (void)updateShape:(SEShape *)shape withSize:(CGSize)size;
+- (void)updateShape:(SEShape *)shape withSize:(CGSize)size andPosition:(CGPoint)position;
 
 @end

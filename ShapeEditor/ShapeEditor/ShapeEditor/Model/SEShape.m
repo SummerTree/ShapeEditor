@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 iSpring. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
 #import "SEShape.h"
 
 @implementation SEShape
@@ -15,10 +16,19 @@
     if (self = [super init])
     {
         _type = shapeType;
-        _size = CGSizeMake(100, 100);
+        _size = CGSizeMake(kShapeSizeWidth, kShapeSizeHeight);
         _position = CGPointMake(0, 0);
-        _zOrder = 0;
-        _selected = false;
+        _index = 0;
+        _selected = NO;
+    }
+    return self;
+}
+
+- (SEShape *)initWithType:(SEShapeType)shapeType position:(CGPoint)shapePosition
+{
+    if (self = [self initWithType:shapeType])
+    {
+        _position = shapePosition;
     }
     return self;
 }
@@ -32,5 +42,16 @@
     }
     return self;
 }
+
+#pragma mark - params
+
+- (NSDictionary *)paramsDict
+{
+    return [NSDictionary dictionaryWithObjectsAndKeys:
+            [NSValue valueWithCGPoint:self.position], kSEShapeParamPosition,
+            [NSValue valueWithCGSize:self.size], kSEShapeParamSize,
+            nil];
+}
+
 
 @end
