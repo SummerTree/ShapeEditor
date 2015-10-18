@@ -137,7 +137,7 @@
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.index > %d", shape.index];
         SEShape *nextShape = [[self.shapes filteredArrayUsingPredicate:predicate] firstObject];
         
-        if (nextShape) idxForInsert = [self.shapes indexOfObject:nextShape];
+        if (nextShape) idxForInsert = (int)[self.shapes indexOfObject:nextShape];
     }
     
     if (idxForInsert >= 0) {

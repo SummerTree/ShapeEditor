@@ -293,7 +293,7 @@ typedef enum : NSUInteger {
     
     [self setNeedsDisplay];
     
-    NSLog(@"tag %d", gestureRecognizer.view.tag);
+    NSLog(@"tag %ld", (long)gestureRecognizer.view.tag);
 }
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
