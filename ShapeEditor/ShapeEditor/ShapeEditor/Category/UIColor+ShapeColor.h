@@ -11,6 +11,8 @@
 @interface UIColor (ShapeColor)
 
 + (UIColor *)shapeFillColor;
++ (UIColor *)shapeSelectedFillColor;
 + (UIColor *)shapeStrokeColor;
++ (UIColor *)shapeResizeAreaStrokeColor;
 
 @end

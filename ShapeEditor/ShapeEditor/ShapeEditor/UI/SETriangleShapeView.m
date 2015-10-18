@@ -14,12 +14,13 @@
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect {
-    CGRect shapeRect = CGRectInset(rect, kShapeViewRectInsetDx, kShapeViewRectInsetDy);
+    CGRect shapeRect = CGRectInset(rect, kSEShapeViewRectInsetDx, kSEShapeViewRectInsetDy);
     
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     CGContextSetLineWidth(context, 2.0);
-    CGContextSetFillColor(context, CGColorGetComponents([UIColor shapeFillColor].CGColor));
+    UIColor *fillColor = (self.shape.selected)? [UIColor shapeSelectedFillColor]: [UIColor shapeFillColor];
+    CGContextSetFillColor(context, CGColorGetComponents(fillColor.CGColor));
     CGContextSetStrokeColor(context, CGColorGetComponents([UIColor shapeStrokeColor].CGColor));
     
     CGContextBeginPath(context);

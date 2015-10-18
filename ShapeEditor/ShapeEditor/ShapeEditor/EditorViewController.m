@@ -123,7 +123,7 @@
 - (void)updateAllShapeViews
 {
     [self.workAreaView.subviews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        [(UIView *)obj setNeedsDisplay];
+        [(SEShapeView *)obj refreshView];
     }];
 }
 

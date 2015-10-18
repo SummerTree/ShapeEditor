@@ -11,9 +11,14 @@
 #import "SEShape.h"
 #import "UIColor+ShapeColor.h"
 
-static const float kShapeViewRectInsetDx = 6.0f;
-static const float kShapeViewRectInsetDy = 6.0f;
+static const float kSEShapeViewRectMinWidth = 10.0f;
+static const float kSEShapeViewRectMinHeight = 10.0f;
 
+static const float kSEShapeViewRectInsetDx = 6.0f;
+static const float kSEShapeViewRectInsetDy = 6.0f;
+
+static const float kSEShapeViewResizeAreaWidth = 30.0f;
+static const float kSEShapeViewResizeAreaHeight = 30.0f;
 
 @protocol SEShapeViewDelegate <NSObject>
 
@@ -24,12 +29,13 @@ static const float kShapeViewRectInsetDy = 6.0f;
 @end
 
 
-@interface SEShapeView : UIView
+@interface SEShapeView : UIView <UIGestureRecognizerDelegate>
 
 @property (nonatomic, weak) id<SEShapeViewDelegate> delegate;
 @property (nonatomic, strong) SEShape *shape;
 
 - (instancetype)initWithShape:(SEShape *)shape;
 - (void)updateViewWithShape:(SEShape *)shape;
+- (void)refreshView;
 
 @end
