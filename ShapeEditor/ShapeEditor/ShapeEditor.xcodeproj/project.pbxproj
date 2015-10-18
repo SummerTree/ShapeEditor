@@ -30,6 +30,8 @@
 		F96C5E9C1BD25229008B833C /* SERectangleShapeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F96C5E9B1BD25229008B833C /* SERectangleShapeView.m */; };
 		F96C5EA11BD26BE9008B833C /* UIColor+ShapeColor.m in Sources */ = {isa = PBXBuildFile; fileRef = F96C5EA01BD26BE9008B833C /* UIColor+ShapeColor.m */; };
 		F96C5EA41BD273FF008B833C /* UIView+Extended.m in Sources */ = {isa = PBXBuildFile; fileRef = F96C5EA31BD273FF008B833C /* UIView+Extended.m */; };
+		F96C5EA71BD3F79E008B833C /* SEShapesStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = F96C5EA61BD3F79E008B833C /* SEShapesStorage.m */; };
+		F96C5EAF1BD4152A008B833C /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = F96C5EAE1BD4152A008B833C /* MBProgressHUD.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +88,10 @@
 		F96C5EA01BD26BE9008B833C /* UIColor+ShapeColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+ShapeColor.m"; path = "Category/UIColor+ShapeColor.m"; sourceTree = "<group>"; };
 		F96C5EA21BD273FF008B833C /* UIView+Extended.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Extended.h"; path = "Category/UIView+Extended.h"; sourceTree = "<group>"; };
 		F96C5EA31BD273FF008B833C /* UIView+Extended.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Extended.m"; path = "Category/UIView+Extended.m"; sourceTree = "<group>"; };
+		F96C5EA51BD3F79E008B833C /* SEShapesStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SEShapesStorage.h; sourceTree = "<group>"; };
+		F96C5EA61BD3F79E008B833C /* SEShapesStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SEShapesStorage.m; sourceTree = "<group>"; };
+		F96C5EAD1BD4152A008B833C /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		F96C5EAE1BD4152A008B833C /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +133,7 @@
 		F96C5E3D1BCFDB8F008B833C /* ShapeEditor */ = {
 			isa = PBXGroup;
 			children = (
+				F96C5EAB1BD414BA008B833C /* 3dParty */,
 				F96C5E9E1BD26B58008B833C /* Category */,
 				F96C5E901BD13437008B833C /* UI */,
 				F96C5E7E1BD0366A008B833C /* Controller */,
@@ -203,6 +210,8 @@
 				F96C5E8E1BD1263A008B833C /* SECommandModify.m */,
 				F96C5E7B1BD026A9008B833C /* SECommandInvoker.h */,
 				F96C5E7C1BD026A9008B833C /* SECommandInvoker.m */,
+				F96C5EA51BD3F79E008B833C /* SEShapesStorage.h */,
+				F96C5EA61BD3F79E008B833C /* SEShapesStorage.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -249,6 +258,24 @@
 				F96C5EA31BD273FF008B833C /* UIView+Extended.m */,
 			);
 			name = Category;
+			sourceTree = "<group>";
+		};
+		F96C5EAB1BD414BA008B833C /* 3dParty */ = {
+			isa = PBXGroup;
+			children = (
+				F96C5EAC1BD4152A008B833C /* MBProgressHUD */,
+			);
+			name = 3dParty;
+			sourceTree = "<group>";
+		};
+		F96C5EAC1BD4152A008B833C /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				F96C5EAD1BD4152A008B833C /* MBProgressHUD.h */,
+				F96C5EAE1BD4152A008B833C /* MBProgressHUD.m */,
+			);
+			name = MBProgressHUD;
+			path = 3dParty/MBProgressHUD;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -356,9 +383,11 @@
 				F96C5E961BD24E96008B833C /* SETriangleShapeView.m in Sources */,
 				F96C5E471BCFDB8F008B833C /* EditorViewController.m in Sources */,
 				F96C5E8F1BD1263A008B833C /* SECommandModify.m in Sources */,
+				F96C5EA71BD3F79E008B833C /* SEShapesStorage.m in Sources */,
 				F96C5E891BD10095008B833C /* HStack.m in Sources */,
 				F96C5E851BD0F1D6008B833C /* SECommandRemove.m in Sources */,
 				F96C5E9C1BD25229008B833C /* SERectangleShapeView.m in Sources */,
+				F96C5EAF1BD4152A008B833C /* MBProgressHUD.m in Sources */,
 				F96C5E821BD0E039008B833C /* SECommandAdd.m in Sources */,
 				F96C5EA11BD26BE9008B833C /* UIColor+ShapeColor.m in Sources */,
 				F96C5E771BD02619008B833C /* SECommand.m in Sources */,
@@ -500,6 +529,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(PROJECT_DIR)/ShapeEditor/3dParty/**",
+				);
 				INFOPLIST_FILE = ShapeEditor/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -512,6 +546,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(PROJECT_DIR)/ShapeEditor/3dParty/**",
+				);
 				INFOPLIST_FILE = ShapeEditor/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

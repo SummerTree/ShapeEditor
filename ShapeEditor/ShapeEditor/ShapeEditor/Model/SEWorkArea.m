@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SEWorkArea.h"
+#import "SEShapesStorage.h"
 
 @interface SEWorkArea()
 
@@ -38,7 +39,32 @@
     return self;
 }
 
+- (void)restoreShapes
+{
+    [SEShapesStorage reStoreShapes:^(NSArray *shapes) {
+        if (shapes) {
+            self.shapes = [shapes mutableCopy];
+            [self.shapes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                ((SEShape *)obj).index = idx + 1;
+            }];
+            
+            self.maxIndexNum = [self.shapes count];
+        }
+        
+        if ([self.delegate respondsToSelector:@selector(shapesRestoreComplete)]) {
+            [self.delegate shapesRestoreComplete];
+        }
+    }];
+}
+
 #pragma mark - misc
+
+- (void)enumerateShapesUsingBlock:(BOOL (^)(SEShape *shape))block
+{
+    [self.shapes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        if (block) *stop = block(obj);
+    }];
+}
 
 - (SEShape *)selectedShape
 {
@@ -71,6 +97,8 @@
     }
     
     if (needSelect) [self updateShape:shape withState:YES];
+    
+    [SEShapesStorage storeShapes:self.shapes];
 }
 
 - (void)hideViewShape:(SEShape *)shape
@@ -78,6 +106,8 @@
     if ([self.delegate respondsToSelector:@selector(hideShapeViewWithIndex:)]) {
         [self.delegate hideShapeViewWithIndex:shape.index];
     }
+    
+    [SEShapesStorage storeShapes:self.shapes];    
 }
 
 #pragma mark - Actions

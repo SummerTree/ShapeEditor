@@ -23,6 +23,7 @@ static const float kSEShapeViewResizeAreaHeight = 30.0f;
 @protocol SEShapeViewDelegate <NSObject>
 
 - (void)shapeTapped:(SEShape *)shape selected:(BOOL)selected;
+- (void)shapeMoving:(SEShape *)shape newPosition:(CGPoint)newPosition;
 - (void)shapeMoved:(SEShape *)shape position:(CGPoint)position;
 - (void)shapeMoved:(SEShape *)shape withSize:(CGSize)size andPosition:(CGPoint)position;
 

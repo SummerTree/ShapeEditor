@@ -15,6 +15,7 @@
 #import "SETriangleShapeView.h"
 #import "SECircleShapeView.h"
 #import "SERectangleShapeView.h"
+#import "MBProgressHUD.h"
 
 @interface EditorViewController ()
 
@@ -32,6 +33,12 @@
     self.commandInvoker = [SECommandInvoker sharedInstance];
     self.workArea = [SEWorkArea sharedInstance];
     self.workArea.delegate = self;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [self.workArea restoreShapes];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -120,6 +127,25 @@
 
 #pragma mark - SEWorkAreaDelegate
 
+- (void)shapesRestoreComplete
+{
+    [self.workArea enumerateShapesUsingBlock:^BOOL(SEShape *shape) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            SEShapeView *newShapeView = [self shapeViewForShape:shape];
+            newShapeView.delegate = self;
+            [self.workAreaView addSubview:newShapeView];
+        });
+        
+        return false;
+    }];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+    });
+    
+    NSLog(@"shapes restored");
+}
+
 - (void)updateAllShapeViews
 {
     [self.workAreaView.subviews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -168,6 +194,13 @@
 - (void)shapeTapped:(SEShape *)shape selected:(BOOL)selected
 {
     [self.workArea updateShape:shape withState:selected];
+}
+
+- (void)shapeMoving:(SEShape *)shape newPosition:(CGPoint)newPosition
+{
+    if (!shape.selected) {
+        [self.workArea updateShape:shape withState:YES];
+    }
 }
 
 - (void)shapeMoved:(SEShape *)shape position:(CGPoint)position

@@ -12,8 +12,8 @@
 static const float kShapeSizeWidth = 100.0f;
 static const float kShapeSizeHeight = 100.0f;
 
-static const NSString *kSEShapeParamPosition = @"position";
-static const NSString *kSEShapeParamSize = @"size";
+static NSString *const kSEShapeParamPosition = @"position";
+static NSString *const kSEShapeParamSize = @"size";
 
 typedef enum : NSUInteger {
     SEShapeTypeTriangle,

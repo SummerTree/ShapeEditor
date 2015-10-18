@@ -8,6 +8,7 @@
 
 #import "SEShapeView.h"
 #import "UIColor+ShapeColor.h"
+#import "UIView+Extended.h"
 
 typedef enum : NSUInteger {
     SEShapeViewResizeAreaTagLeftTop = 100,
@@ -257,6 +258,10 @@ typedef enum : NSUInteger {
 {
     CGPoint tPoint = [gestureRecognizer translationInView:self];
     self.frame = [self shapeRectWithTranslation:tPoint];
+    
+    if ([self.delegate respondsToSelector:@selector(shapeMoving:newPosition:)]) {
+        [self.delegate shapeMoving:self.shape newPosition:self.origin];
+    }
     
     switch (gestureRecognizer.state) {
         case UIGestureRecognizerStateEnded:

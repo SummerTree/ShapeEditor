@@ -11,6 +11,8 @@
 
 @protocol SEWorkAreaDelegate <NSObject>
 
+- (void)shapesRestoreComplete;
+
 - (void)updateAllShapeViews;
 - (void)showShapeViewWithIndex:(NSUInteger)idx;
 - (void)hideShapeViewWithIndex:(NSUInteger)idx;
@@ -24,6 +26,9 @@
 
 + (SEWorkArea *)sharedInstance;
 
+- (void)restoreShapes;
+
+- (void)enumerateShapesUsingBlock:(BOOL (^)(SEShape *shape))block;
 - (SEShape *)selectedShape;
 - (SEShape *)shapeWithIndex:(NSUInteger)idx;
 

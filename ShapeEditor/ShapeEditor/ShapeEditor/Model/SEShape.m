@@ -53,5 +53,25 @@
             nil];
 }
 
+#pragma mark - NSCoding
+
+- (id)initWithCoder:(NSCoder *)decoder {
+    if (self = [super init]) {
+        self.type = [decoder decodeIntegerForKey:@"type"];
+        self.position = [decoder decodeCGPointForKey:@"position"];
+        self.size = [decoder decodeCGSizeForKey:@"size"];
+        self.index = [decoder decodeIntegerForKey:@"index"];
+        self.selected = [decoder decodeBoolForKey:@"selected"];
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)encoder {
+    [encoder encodeInteger:self.type forKey:@"type"];
+    [encoder encodeCGPoint:self.position forKey:@"position"];
+    [encoder encodeCGSize:self.size forKey:@"size"];
+    [encoder encodeInteger:self.index forKey:@"index"];
+    [encoder encodeBool:self.selected forKey:@"selected"];
+}
 
 @end
