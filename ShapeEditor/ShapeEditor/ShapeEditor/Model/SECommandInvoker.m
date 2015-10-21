@@ -60,9 +60,9 @@
 - (void)addCommandAndExecute:(SECommand *)command
 {
     [self clearCommandsBeforeInsert];
+    _currentCommandIndex++;
     [command execute];
     [_commandStack push:command];
-    _currentCommandIndex++;
 }
 
 - (void)redoCommand
@@ -75,9 +75,10 @@
 
 - (void)undoCommand
 {
-    if ([self hasUndoCommands]) {        
-        [[self currentCommand] rollback];
+    if ([self hasUndoCommands]) {
+        SECommand * command = [self currentCommand];
         _currentCommandIndex--;
+        [command rollback];
     }
 }
 

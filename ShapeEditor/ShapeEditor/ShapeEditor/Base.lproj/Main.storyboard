@@ -144,6 +144,9 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="redoButton" destination="htp-R9-uV0" id="FkD-j0-uMi"/>
+                        <outlet property="trashButton" destination="yV6-7n-q9c" id="pFU-7d-hEa"/>
+                        <outlet property="undoButton" destination="4dS-hC-taG" id="tVp-wx-yg7"/>
                         <outlet property="workAreaView" destination="ceT-eV-ri5" id="yQf-e3-HDc"/>
                     </connections>
                 </viewController>

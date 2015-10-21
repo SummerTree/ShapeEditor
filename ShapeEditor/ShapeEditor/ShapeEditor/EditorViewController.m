@@ -22,6 +22,9 @@
 @property (nonatomic, strong) SECommandInvoker *commandInvoker;
 @property (nonatomic, strong) SEWorkArea *workArea;
 @property (weak, nonatomic) IBOutlet UIView *workAreaView;
+@property (weak, nonatomic) IBOutlet UIButton *undoButton;
+@property (weak, nonatomic) IBOutlet UIButton *redoButton;
+@property (weak, nonatomic) IBOutlet UIButton *trashButton;
 
 @end
 
@@ -44,6 +47,15 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - misc
+
+- (void)initButtonsState
+{
+    self.undoButton.enabled = [self.commandInvoker hasUndoCommands];
+    self.redoButton.enabled = [self.commandInvoker hasRedoCommands];
+    self.trashButton.enabled = [self.workArea selectedShape] != nil;
 }
 
 #pragma mark - Actions
@@ -140,6 +152,7 @@
     }];
     
     dispatch_async(dispatch_get_main_queue(), ^{
+        [self initButtonsState];
         [MBProgressHUD hideHUDForView:self.view animated:YES];
     });
     
@@ -151,6 +164,8 @@
     [self.workAreaView.subviews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         [(SEShapeView *)obj refreshView];
     }];
+    
+    [self initButtonsState];
 }
 
 - (void)showShapeViewWithIndex:(NSUInteger)idx
