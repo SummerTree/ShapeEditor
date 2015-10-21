@@ -39,4 +39,7 @@ static const float kSEShapeViewResizeAreaHeight = 30.0f;
 - (void)updateViewWithShape:(SEShape *)shape;
 - (void)refreshView;
 
+//abstract
+- (BOOL)pointInsideFigure:(CGPoint)point;
+
 @end

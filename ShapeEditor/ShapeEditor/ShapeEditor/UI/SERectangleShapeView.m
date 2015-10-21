@@ -33,5 +33,13 @@
     [super drawRect:rect];
 }
 
+- (BOOL)pointInsideFigure:(CGPoint)point
+{
+    CGRect rect = CGRectMake(0, 0, self.shape.size.width, self.shape.size.height);
+    CGRect figureRect = CGRectInset(rect, kSEShapeViewRectInsetDx, kSEShapeViewRectInsetDy);
+    
+    return CGRectContainsPoint(figureRect, point);
+}
+
 
 @end

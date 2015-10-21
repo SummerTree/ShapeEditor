@@ -255,7 +255,6 @@ typedef enum : NSUInteger {
 - (void)tapGesture:(UITapGestureRecognizer *)gestureRecognizer
 {
     [self saveShapeNewState:!self.shape.selected];
-    
     NSLog(@"tapped %lu", (unsigned long)self.shape.index);
 }
 
@@ -307,14 +306,17 @@ typedef enum : NSUInteger {
     UIView *iSubView;
     
     while ((iSubView = [reverseE nextObject])) {
-        
         UIView *viewWasHit = [iSubView hitTest:[self convertPoint:point toView:iSubView] withEvent:event];
         if(viewWasHit) {
             return viewWasHit;
         }
-        
     }
-    return [super hitTest:point withEvent:event];
+    
+    if ([self pointInsideFigure:point]) {
+        return self;
+    }
+    
+    return nil;
 }
 
 #pragma mark - draw
@@ -336,6 +338,14 @@ typedef enum : NSUInteger {
         
         CGContextDrawPath(context, kCGPathStroke);
     }
+}
+
+#pragma mark - abstract methods
+
+- (BOOL)pointInsideFigure:(CGPoint)point
+{
+    [NSException raise:@"Invoked abstract method" format:@"Invoked abstract method"];
+    return false;
 }
 
 @end

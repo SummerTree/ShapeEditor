@@ -33,5 +33,14 @@
     [super drawRect:rect];
 }
 
+- (BOOL)pointInsideFigure:(CGPoint)point
+{
+    CGRect rect = CGRectMake(0, 0, self.shape.size.width, self.shape.size.height);
+    CGRect figureRect = CGRectInset(rect, kSEShapeViewRectInsetDx, kSEShapeViewRectInsetDy);
+    UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:figureRect];
+    
+    return [path containsPoint:point];
+}
+
 
 @end
