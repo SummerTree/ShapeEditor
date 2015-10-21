@@ -155,6 +155,12 @@
     [self showViewShape:shape withSelect:YES];
 }
 
+- (void)clearSelection
+{
+    SEShape *shape = [self selectedShape];
+    if (shape) [self updateShape:shape withState:NO];
+}
+
 #pragma mark - shape update
 
 - (void)updateShape:(SEShape *)shape withParams:(NSDictionary *)params

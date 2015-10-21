@@ -40,6 +40,7 @@
 - (void)addShape:(SEShape *)shape;
 - (void)removeShape:(SEShape *)shape;
 - (void)returnShape:(SEShape *)shape;
+- (void)clearSelection;
 
 - (void)updateShape:(SEShape *)shape withParams:(NSDictionary *)params;
 - (void)updateShape:(SEShape *)shape withState:(BOOL)selected;

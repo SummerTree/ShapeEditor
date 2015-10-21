@@ -36,6 +36,7 @@
     self.commandInvoker = [SECommandInvoker sharedInstance];
     self.workArea = [SEWorkArea sharedInstance];
     self.workArea.delegate = self;
+    [self initGestures];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -51,11 +52,24 @@
 
 #pragma mark - misc
 
+- (void)initGestures
+{
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(workAreaTap:)];
+    [self.workAreaView addGestureRecognizer:tap];
+}
+
 - (void)initButtonsState
 {
     self.undoButton.enabled = [self.commandInvoker hasUndoCommands];
     self.redoButton.enabled = [self.commandInvoker hasRedoCommands];
     self.trashButton.enabled = [self.workArea selectedShape] != nil;
+}
+
+#pragma mark - Gestures
+
+- (void)workAreaTap:(UITapGestureRecognizer *)gesture
+{
+    [self.workArea clearSelection];
 }
 
 #pragma mark - Actions
