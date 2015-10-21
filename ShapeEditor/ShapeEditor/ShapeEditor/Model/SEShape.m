@@ -74,4 +74,41 @@
     [encoder encodeBool:self.selected forKey:@"selected"];
 }
 
+- (BOOL)isEqual:(id)object
+{
+    SEShape *shape = (SEShape *)object;
+    
+    if (shape.index == self.index &&
+        CGPointEqualToPoint(shape.position, self.position) &&
+        CGSizeEqualToSize(shape.size, self.size) &&
+        shape.type == self.type &&
+        shape.selected == self.selected) {
+        return YES;
+    }
+    
+    return NO;
+}
+
+- (NSUInteger)hash {
+    NSString *data = [NSString stringWithFormat:@"%lu %@ %@ %lu %d",
+                      (unsigned long)self.type,
+                      NSStringFromCGPoint(self.position),
+                      NSStringFromCGSize(self.size),
+                      (unsigned long)self.index,
+                      self.selected];
+    
+    return [data hash];
+}
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    SEShape *shape = [[SEShape allocWithZone:zone] initWithType:self.type size:self.size position:self.position];
+    shape.selected = self.selected;
+    shape.index = self.index;
+    
+    return shape;
+}
+
+
+
 @end

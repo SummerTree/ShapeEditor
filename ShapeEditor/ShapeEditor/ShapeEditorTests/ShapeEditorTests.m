@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
+#import "AppDelegate.h"
+#import "EditorViewController.h"
+
+#import "SECommandInvoker.h"
+#import "SECommandAdd.h"
+#import "SECommandRemove.h"
+#import "SECommandModify.h"
+#import "SEShapesStorage.h"
 
 @interface ShapeEditorTests : XCTestCase
 
@@ -25,16 +33,301 @@
     [super tearDown];
 }
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    XCTAssert(YES, @"Pass");
+#pragma mark - shape
+
+- (void)testShapeCreate
+{
+    CGSize size = CGSizeMake(24, 56);
+    CGPoint position = CGPointMake(3, 5);
+
+    SEShape *shape = [[SEShape alloc] initWithType:SEShapeTypeCircle];
+    XCTAssertNotNil(shape, @"nil shape instance");
+    XCTAssertEqual(shape.selected, NO, @"shape must be unselected after init");
+    XCTAssertEqual(shape.index, 0, @"shape index must be equal zero after init");
+    
+    shape = [[SEShape alloc] initWithType:SEShapeTypeTriangle position:position];
+    XCTAssertNotNil(shape, @"nil shape instance");
+    XCTAssertTrue(shape.type == SEShapeTypeTriangle, @"shape type not right");
+    XCTAssertTrue(CGPointEqualToPoint(shape.position, position), @"shape position is not equal");
+    
+    shape = [[SEShape alloc] initWithType:SEShapeTypeRectangle size:size position:position];
+    XCTAssertNotNil(shape, @"nil shape instance");
+    XCTAssertTrue(shape.type == SEShapeTypeRectangle, @"shape type not right");
+    XCTAssertTrue(CGSizeEqualToSize(shape.size, size), @"shape size is not equal");
+    XCTAssertTrue(CGPointEqualToPoint(shape.position, position), @"shape position is not equal");
 }
 
+#pragma mark - commands
+
+- (void)testCommandAddRemoveCreate
+{
+    SEWorkArea *workArea = [SEWorkArea sharedInstance];
+    SEShape *shape = [[SEShape alloc] initWithType:SEShapeTypeCircle];
+    
+    SECommandAdd *commandAdd = [[SECommandAdd alloc] initWithWorkArea:workArea andShape:shape];
+    XCTAssertNotNil(commandAdd, @"nil command instance");
+    XCTAssertEqualObjects(shape, commandAdd.shape, @"shape propery invalid");
+    
+    SECommandRemove *commandRemove = [[SECommandRemove alloc] initWithWorkArea:workArea andShape:shape];
+    XCTAssertNotNil(commandRemove, @"nil command instance");
+    XCTAssertEqualObjects(shape, commandRemove.shape, @"shape propery invalid");
+}
+
+- (void)testCommandModifyCreate
+{
+    SEWorkArea *workArea = [SEWorkArea sharedInstance];
+    SEShape *shape = [[SEShape alloc] initWithType:SEShapeTypeCircle];
+    
+    CGPoint position = CGPointMake(25, 47);
+    CGSize size = CGSizeMake(250, 470);
+    
+    NSDictionary *newParams = [NSDictionary dictionaryWithObjectsAndKeys:
+                            [NSValue valueWithCGPoint:position], kSEShapeParamPosition,
+                            [NSValue valueWithCGSize:size], kSEShapeParamSize,
+                            nil];
+    NSDictionary *oldParams = [shape paramsDict];
+    
+    SECommandModify *commandModify = [[SECommandModify alloc] initWithWorkArea:workArea andShape:shape andNewParams:newParams];
+    XCTAssertNotNil(commandModify, @"nil command instance");
+    XCTAssertEqualObjects(shape, commandModify.shape, @"shape propery invalid");
+    XCTAssertTrue([newParams isEqualToDictionary:commandModify->_newParams], @"new params incorrect");
+    XCTAssertTrue([oldParams isEqualToDictionary:commandModify->_oldParams], @"old params incorrect");
+    XCTAssertEqual(commandModify->_type, SECommandModifyTypeSizeAndPosition, @"type param incorrect");
+}
+
+
+#pragma mark - command invoker
+
+- (void)testCommandInvoker
+{
+    SEWorkArea *workArea = [SEWorkArea sharedInstance];
+    SECommandInvoker *commandInvoker = [SECommandInvoker sharedInstance];
+    
+    SEShape *shape = [[SEShape alloc] initWithType:SEShapeTypeCircle];
+    SECommandAdd *command1 = [[SECommandAdd alloc] initWithWorkArea:workArea andShape:shape];
+    [commandInvoker addCommandAndExecute:command1];
+    
+    shape = [[SEShape alloc] initWithType:SEShapeTypeRectangle];
+    SECommandAdd *command2 = [[SECommandAdd alloc] initWithWorkArea:workArea andShape:shape];
+    [commandInvoker addCommandAndExecute:command2];
+    
+    XCTAssertEqualObjects(command2, [commandInvoker currentCommand], @"current command failed");
+    XCTAssertEqualObjects(command1, [commandInvoker previousCommand], @"previous command failed");
+    
+    XCTAssertFalse([commandInvoker hasRedoCommands], @"has redo check failed");
+    
+    [commandInvoker undoCommand];
+    XCTAssertEqualObjects(command1, [commandInvoker currentCommand], @"undo failed");
+
+    [commandInvoker undoCommand];
+    XCTAssertNil([commandInvoker currentCommand], @"current command failed");
+    XCTAssertFalse([commandInvoker hasUndoCommands], @"has undo check failed");
+    
+    [commandInvoker redoCommand];
+    [commandInvoker redoCommand];
+    XCTAssertEqualObjects(command2, [commandInvoker currentCommand], @"redo failed");
+}
+
+#pragma mark - workarea
+
+- (void)testWorkAreaShapeWithIndex
+{
+    SEWorkArea *workArea = [SEWorkArea sharedInstance];
+    SECommandInvoker *commandInvoker = [SECommandInvoker sharedInstance];
+    
+    SEShape *shape, *shape4;
+    SECommandAdd *command;
+    
+    for (int i = 0; i < 5; i++) {
+        shape = [[SEShape alloc] initWithType:SEShapeTypeCircle];
+        command = [[SECommandAdd alloc] initWithWorkArea:workArea andShape:shape];
+        [commandInvoker addCommandAndExecute:command];
+        
+        if (i == 3) shape4 = shape;
+    }
+    
+    SEShape *shape4Got = [workArea shapeWithIndex:shape4.index];
+    
+    XCTAssertEqualObjects(shape4, shape4Got, @"shapeWithIndex faild");
+}
+
+- (void)testWorkAreaRemoveAndReturnShape
+{
+    SEWorkArea *workArea = [SEWorkArea sharedInstance];
+    SECommandInvoker *commandInvoker = [SECommandInvoker sharedInstance];
+    
+    SEShape *shape, *shape4;
+    SECommandAdd *command;
+    
+    for (int i = 0; i < 5; i++) {
+        shape = [[SEShape alloc] initWithType:SEShapeTypeCircle];
+        command = [[SECommandAdd alloc] initWithWorkArea:workArea andShape:shape];
+        [commandInvoker addCommandAndExecute:command];
+        
+        if (i == 3) shape4 = shape;
+    }
+    
+    NSUInteger mIdxShape4 = [workArea.shapes indexOfObject:shape4];
+    
+    [workArea removeShape:shape4];
+    SEShape *shape4Got = [workArea shapeWithIndex:shape4.index];
+    XCTAssertNil(shape4Got, @"shape remove faild");
+    
+    [workArea returnShape:shape4];
+    shape4Got = [workArea shapeWithIndex:shape4.index];
+    XCTAssertEqualObjects(shape4, shape4Got, @"shape return faild");
+    
+    NSUInteger mIdxShape4Got = [workArea.shapes indexOfObject:shape4Got];
+    XCTAssertEqual(mIdxShape4, mIdxShape4Got, @"returned shape array position incorrect");
+}
+
+- (void)testWorkAreaUpdateShape
+{
+    SEWorkArea *workArea = [SEWorkArea sharedInstance];
+    SEShape *shape = [[SEShape alloc] initWithType:SEShapeTypeCircle];
+    CGPoint position = CGPointMake(120, 130);
+    CGSize size = CGSizeMake(50, 150);
+    
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            [NSValue valueWithCGPoint:position], kSEShapeParamPosition,
+                            nil];
+    [workArea updateShape:shape withParams:params];
+    XCTAssertTrue(CGPointEqualToPoint(position, shape.position), @"update shape with position incorrect");
+
+    params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            [NSValue valueWithCGSize:size], kSEShapeParamSize,
+                            nil];
+    [workArea updateShape:shape withParams:params];
+    XCTAssertTrue(CGSizeEqualToSize(size, shape.size), @"update shape with size incorrect");
+    
+    
+}
+
+- (void)testWorkAreaUpdateShapeSelect
+{
+    SEWorkArea *workArea = [SEWorkArea sharedInstance];
+    SECommandInvoker *commandInvoker = [SECommandInvoker sharedInstance];
+    
+    SEShape *shape4;
+    SECommandAdd *command;
+    
+    for (int i = 0; i < 5; i++) {
+        SEShape *shape = [[SEShape alloc] initWithType:SEShapeTypeCircle];
+        command = [[SECommandAdd alloc] initWithWorkArea:workArea andShape:shape];
+        [commandInvoker addCommandAndExecute:command];
+        
+        if (i == 3) shape4 = shape;
+    }
+    
+    BOOL savedState = shape4.selected;
+    XCTAssertEqual(savedState, NO, @"default shape state incorrect");
+    
+    [workArea updateShape:shape4 withState:YES];
+    XCTAssertEqual(shape4.selected, YES, @"update shape selected state incorrect");
+    
+    [workArea.shapes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        SEShape *shape = (SEShape *)obj;
+        
+        if (shape != shape4) {
+            XCTAssertFalse(shape.selected, @"unselect other shapes incorrect");
+        }
+    }];
+    
+    [workArea updateShape:shape4 withState:savedState];
+    XCTAssertEqual(shape4.selected, savedState, @"update shape selected state incorrect");
+    
+}
+
+- (void)testWorkAreaSelectedShape
+{
+    SEWorkArea *workArea = [SEWorkArea sharedInstance];
+    SECommandInvoker *commandInvoker = [SECommandInvoker sharedInstance];
+    
+    SEShape *shape4;
+    SECommandAdd *command;
+    
+    for (int i = 0; i < 5; i++) {
+        SEShape *shape = [[SEShape alloc] initWithType:SEShapeTypeCircle];
+        command = [[SECommandAdd alloc] initWithWorkArea:workArea andShape:shape];
+        [commandInvoker addCommandAndExecute:command];
+        
+        if (i == 3) shape4 = shape;
+    }
+
+    [workArea updateShape:shape4 withState:YES];
+    XCTAssertEqualObjects(shape4, [workArea selectedShape], @"selected shape incorrect");
+}
+
+#pragma mark - workarea responds to commands
+
+- (void)testWorkAreaShapesCount
+{
+    SEWorkArea *workArea = [SEWorkArea sharedInstance];
+    SECommandInvoker *commandInvoker = [SECommandInvoker sharedInstance];
+    NSUInteger shapesCount = [workArea.shapes count];
+
+    SEShape *shape;
+    SECommandAdd *command;
+    
+    for (int i = 0; i < 5; i++) {
+        shape = [[SEShape alloc] initWithType:SEShapeTypeCircle];
+        command = [[SECommandAdd alloc] initWithWorkArea:workArea andShape:shape];
+        [commandInvoker addCommandAndExecute:command];
+    }
+    
+    XCTAssertTrue([workArea.shapes count] == shapesCount + 5, @"add shape faild");
+
+    shape = [workArea.shapes lastObject];
+    SECommandRemove *commandRemove = [[SECommandRemove alloc] initWithWorkArea:workArea andShape:shape];
+    [commandInvoker addCommandAndExecute:commandRemove];
+    
+    XCTAssertTrue([workArea.shapes count] == shapesCount + 4, @"remove shape faild");
+    
+    shape = [workArea.shapes firstObject];
+    commandRemove = [[SECommandRemove alloc] initWithWorkArea:workArea andShape:shape];
+    [commandInvoker addCommandAndExecute:commandRemove];
+    
+    XCTAssertTrue([workArea.shapes count] == shapesCount + 3, @"remove shape faild");
+}
+
+#pragma mark - shape storage
+
+- (void)testShapeStoreRestore
+{
+    SEWorkArea *workArea = [SEWorkArea sharedInstance];
+    SECommandInvoker *commandInvoker = [SECommandInvoker sharedInstance];
+    
+    SEShape *shape1 = [[SEShape alloc] initWithType:SEShapeTypeCircle];
+    SECommandAdd *command = [[SECommandAdd alloc] initWithWorkArea:workArea andShape:shape1];
+    [commandInvoker addCommandAndExecute:command];
+    
+    //update shape with current params state
+    shape1 = [shape1 copy];
+
+    [SEShapesStorage storeShapes:workArea.shapes];
+    
+    SEShape *shape2 = [[SEShape alloc] initWithType:SEShapeTypeRectangle];
+    command = [[SECommandAdd alloc] initWithWorkArea:workArea andShape:shape2];
+    [commandInvoker addCommandAndExecute:command];
+    
+    __block SEShape *shapeRestored;
+    [SEShapesStorage reStoreShapes:^(NSArray *shapes) {
+        shapeRestored = [shapes lastObject];
+
+//TODO: XCTAssertEqual not work in blocks - fix it!
+        
+        XCTAssertEqual([shapeRestored isEqual:shape1], true, @"restored shapes is not correct");
+        XCTAssertEqual([shapeRestored isEqual:shape2], false, @"restored shapes is not correct");
+    }];
+}
+
+/*
 - (void)testPerformanceExample {
     // This is an example of a performance test case.
     [self measureBlock:^{
         // Put the code you want to measure the time of here.
     }];
 }
+*/
 
 @end

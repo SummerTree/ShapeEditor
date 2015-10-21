@@ -24,6 +24,11 @@
 
 @property (nonatomic, weak) id<SEWorkAreaDelegate> delegate;
 
+#ifdef UNIT_TESTS
+@property (nonatomic, strong) NSMutableArray *shapes;
+@property (nonatomic, assign) NSUInteger maxIndexNum;
+#endif
+
 + (SEWorkArea *)sharedInstance;
 
 - (void)restoreShapes;

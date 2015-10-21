@@ -41,6 +41,8 @@
 
 - (void)restoreShapes
 {
+    if (IS_UNIT_TESTING) return;
+    
     [SEShapesStorage reStoreShapes:^(NSArray *shapes) {
         if (shapes) {
             self.shapes = [shapes mutableCopy];
@@ -97,8 +99,10 @@
     }
     
     if (needSelect) [self updateShape:shape withState:YES];
-    
-    [SEShapesStorage storeShapes:self.shapes];
+
+    if (!IS_UNIT_TESTING) {
+        [SEShapesStorage storeShapes:self.shapes];
+    }
 }
 
 - (void)hideViewShape:(SEShape *)shape
@@ -106,8 +110,10 @@
     if ([self.delegate respondsToSelector:@selector(hideShapeViewWithIndex:)]) {
         [self.delegate hideShapeViewWithIndex:shape.index];
     }
-    
-    [SEShapesStorage storeShapes:self.shapes];    
+
+    if (!IS_UNIT_TESTING) {
+        [SEShapesStorage storeShapes:self.shapes];
+    }
 }
 
 #pragma mark - Actions
@@ -194,6 +200,5 @@
     shape.position = position;
     [self showViewShape:shape withSelect:YES];
 }
-
 
 @end

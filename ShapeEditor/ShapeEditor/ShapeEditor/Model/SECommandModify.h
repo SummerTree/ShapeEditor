@@ -16,6 +16,9 @@ typedef enum : NSUInteger {
 } SECommandModifyType;
 
 @interface SECommandModify : SECommand {
+#ifdef UNIT_TESTS
+    @public
+#endif
     SECommandModifyType _type;
     NSDictionary *_newParams;
     NSDictionary *_oldParams;
