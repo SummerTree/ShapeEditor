@@ -203,14 +203,19 @@ typedef enum : NSUInteger {
     int signX = (corner == SEShapeViewResizeAreaTagLeftTop || corner == SEShapeViewResizeAreaTagLeftBottom)? 1: -1;
     int signY = (corner == SEShapeViewResizeAreaTagLeftTop || corner == SEShapeViewResizeAreaTagRightTop)? 1: -1;
     
+    float minWidth = (kSEShapeViewRectMinWidth + kSEShapeViewRectInsetDx * 2);
+    float minHeight = (kSEShapeViewRectMinHeight + kSEShapeViewRectInsetDy * 2);
+    
+    float maxX = (self.shape.position.x + self.shape.size.width - minWidth);
+    float maxY = (self.shape.position.y + self.shape.size.height - minHeight);
+    
     float newX = self.shape.position.x + tPoint.x;
     float newY = self.shape.position.y + tPoint.y;
     float newWidth = self.shape.size.width - tPoint.x * signX;
     float newHeight = self.shape.size.height - tPoint.y * signY;
     
-    float minWidth = (kSEShapeViewRectMinWidth + kSEShapeViewRectInsetDx * 2);
-    float minHeight = (kSEShapeViewRectMinHeight + kSEShapeViewRectInsetDy * 2);
-    
+    newX = (newX > maxX)? maxX: newX;
+    newY = (newY > maxY)? maxY: newY;
     newWidth = (newWidth < minWidth)? minWidth: newWidth;
     newHeight = (newHeight < minHeight)? minHeight: newHeight;
     
