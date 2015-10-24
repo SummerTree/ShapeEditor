@@ -44,6 +44,7 @@
     [SEShapesStorage reStoreShapes:^(NSArray *shapes) {
         if (shapes) {
             self.shapes = [shapes mutableCopy];
+            
             [self.shapes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 ((SEShape *)obj).index = idx + 1;
             }];
@@ -61,20 +62,28 @@
 
 - (void)enumerateShapesUsingBlock:(BOOL (^)(SEShape *shape))block
 {
-    [self.shapes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        if (block) *stop = block(obj);
-    }];
+    BOOL stop = NO;
+    for (SEShape *shapeObj in self.shapes) {
+        if (block) stop = block(shapeObj);
+        if (stop) break;
+    }
 }
 
 - (SEShape *)selectedShape
 {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.selected = YES"];
+    NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+        return ((SEShape *)evaluatedObject).selected == YES;
+    }];
+    
     return [[self.shapes filteredArrayUsingPredicate:predicate] firstObject];
 }
 
 - (SEShape *)shapeWithIndex:(NSUInteger)idx
 {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.index = %d", idx];
+    NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+        return ((SEShape *)evaluatedObject).index == idx;
+    }];
+    
     return [[self.shapes filteredArrayUsingPredicate:predicate] firstObject];
 }
 
@@ -134,7 +143,10 @@
     int idxForInsert = -1;
     
     if ([self.shapes count]) {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.index > %d", shape.index];
+        NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+            return ((SEShape *)evaluatedObject).index > shape.index;
+        }];
+        
         SEShape *nextShape = [[self.shapes filteredArrayUsingPredicate:predicate] firstObject];
         
         if (nextShape) idxForInsert = (int)[self.shapes indexOfObject:nextShape];
@@ -172,12 +184,11 @@
 {
     shape.selected = selected;
     
-    [self.shapes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        SEShape *shapeObj = (SEShape *)obj;
+    for (SEShape *shapeObj in self.shapes) {
         if (shape.index != shapeObj.index) {
             shapeObj.selected = NO;
         }
-    }];
+    }
     
     [self refreshAllShapes];
 }

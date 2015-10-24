@@ -116,16 +116,14 @@
 
 - (SEShapeView *)findShapeViewWithIndex:(NSUInteger)index
 {
-    __block SEShapeView *shapeView = nil;
-    NSArray *mViews = [self.workAreaView subviews];
+    SEShapeView *shapeView = nil;
     
-    [mViews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        SEShapeView *view = (SEShapeView *)obj;
+    for (SEShapeView *view in [self.workAreaView subviews]) {
         if (view.shape.index == index) {
             shapeView = view;
-            *stop = YES;
+            break;
         }
-    }];
+    }
     
     return shapeView;
 }
@@ -175,9 +173,9 @@
 
 - (void)updateAllShapeViews
 {
-    [self.workAreaView.subviews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        [(SEShapeView *)obj refreshView];
-    }];
+    for (SEShapeView *shapeView in self.workAreaView.subviews) {
+        [shapeView refreshView];
+    }
     
     [self initButtonsState];
 }

@@ -228,14 +228,12 @@
     [workArea updateShape:shape4 withState:YES];
     XCTAssertEqual(shape4.selected, YES, @"update shape selected state incorrect");
     
-    [workArea.shapes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        SEShape *shape = (SEShape *)obj;
-        
+    for (SEShape *shape in workArea.shapes) {
         if (shape != shape4) {
             XCTAssertFalse(shape.selected, @"unselect other shapes incorrect");
         }
-    }];
-    
+    }
+        
     [workArea updateShape:shape4 withState:savedState];
     XCTAssertEqual(shape4.selected, savedState, @"update shape selected state incorrect");
     
