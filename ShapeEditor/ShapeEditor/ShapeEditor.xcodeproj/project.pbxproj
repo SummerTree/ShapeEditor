@@ -33,6 +33,7 @@
 		F96C5EA71BD3F79E008B833C /* SEShapesStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = F96C5EA61BD3F79E008B833C /* SEShapesStorage.m */; };
 		F96C5EAF1BD4152A008B833C /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = F96C5EAE1BD4152A008B833C /* MBProgressHUD.m */; };
 		F98C3E801BD806A6008640EF /* SEWorkAreaView.m in Sources */ = {isa = PBXBuildFile; fileRef = F98C3E7F1BD806A6008640EF /* SEWorkAreaView.m */; };
+		F98C3E8E1BDBEB09008640EF /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F98C3E831BDBEB08008640EF /* libOCMock.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +97,16 @@
 		F98C3E751BD7BB67008640EF /* ShapeEditor-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ShapeEditor-Prefix.pch"; sourceTree = "<group>"; };
 		F98C3E7E1BD806A6008640EF /* SEWorkAreaView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SEWorkAreaView.h; path = UI/SEWorkAreaView.h; sourceTree = "<group>"; };
 		F98C3E7F1BD806A6008640EF /* SEWorkAreaView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SEWorkAreaView.m; path = UI/SEWorkAreaView.m; sourceTree = "<group>"; };
+		F98C3E831BDBEB08008640EF /* libOCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libOCMock.a; sourceTree = "<group>"; };
+		F98C3E851BDBEB08008640EF /* NSNotificationCenter+OCMAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotificationCenter+OCMAdditions.h"; sourceTree = "<group>"; };
+		F98C3E861BDBEB08008640EF /* OCMArg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMArg.h; sourceTree = "<group>"; };
+		F98C3E871BDBEB08008640EF /* OCMConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMConstraint.h; sourceTree = "<group>"; };
+		F98C3E881BDBEB08008640EF /* OCMLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMLocation.h; sourceTree = "<group>"; };
+		F98C3E891BDBEB09008640EF /* OCMMacroState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMMacroState.h; sourceTree = "<group>"; };
+		F98C3E8A1BDBEB09008640EF /* OCMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMock.h; sourceTree = "<group>"; };
+		F98C3E8B1BDBEB09008640EF /* OCMockObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMockObject.h; sourceTree = "<group>"; };
+		F98C3E8C1BDBEB09008640EF /* OCMRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMRecorder.h; sourceTree = "<group>"; };
+		F98C3E8D1BDBEB09008640EF /* OCMStubRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMStubRecorder.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +121,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F98C3E8E1BDBEB09008640EF /* libOCMock.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,6 +178,7 @@
 		F96C5E571BCFDB90008B833C /* ShapeEditorTests */ = {
 			isa = PBXGroup;
 			children = (
+				F98C3E811BDBEB08008640EF /* 3dParty */,
 				F96C5E5A1BCFDB90008B833C /* ShapeEditorTests.m */,
 				F96C5E581BCFDB90008B833C /* Supporting Files */,
 			);
@@ -283,6 +296,39 @@
 			);
 			name = MBProgressHUD;
 			path = 3dParty/MBProgressHUD;
+			sourceTree = "<group>";
+		};
+		F98C3E811BDBEB08008640EF /* 3dParty */ = {
+			isa = PBXGroup;
+			children = (
+				F98C3E821BDBEB08008640EF /* OCMock3.1.5 */,
+			);
+			path = 3dParty;
+			sourceTree = "<group>";
+		};
+		F98C3E821BDBEB08008640EF /* OCMock3.1.5 */ = {
+			isa = PBXGroup;
+			children = (
+				F98C3E831BDBEB08008640EF /* libOCMock.a */,
+				F98C3E841BDBEB08008640EF /* OCMock */,
+			);
+			path = OCMock3.1.5;
+			sourceTree = "<group>";
+		};
+		F98C3E841BDBEB08008640EF /* OCMock */ = {
+			isa = PBXGroup;
+			children = (
+				F98C3E851BDBEB08008640EF /* NSNotificationCenter+OCMAdditions.h */,
+				F98C3E861BDBEB08008640EF /* OCMArg.h */,
+				F98C3E871BDBEB08008640EF /* OCMConstraint.h */,
+				F98C3E881BDBEB08008640EF /* OCMLocation.h */,
+				F98C3E891BDBEB09008640EF /* OCMMacroState.h */,
+				F98C3E8A1BDBEB09008640EF /* OCMock.h */,
+				F98C3E8B1BDBEB09008640EF /* OCMockObject.h */,
+				F98C3E8C1BDBEB09008640EF /* OCMRecorder.h */,
+				F98C3E8D1BDBEB09008640EF /* OCMStubRecorder.h */,
+			);
+			path = OCMock;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -582,8 +628,23 @@
 					"$(inherited)",
 					"UNIT_TESTS=1",
 				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(PROJECT_DIR)/ShapeEditorTests/3dParty/**",
+				);
 				INFOPLIST_FILE = ShapeEditorTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ShapeEditorTests/3dParty/OCMock3.1.5",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					XCTest,
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ShapeEditor.app/ShapeEditor";
@@ -599,8 +660,23 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(PROJECT_DIR)/ShapeEditorTests/3dParty/**",
+				);
 				INFOPLIST_FILE = ShapeEditorTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ShapeEditorTests/3dParty/OCMock3.1.5",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					XCTest,
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ShapeEditor.app/ShapeEditor";

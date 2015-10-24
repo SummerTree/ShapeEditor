@@ -41,8 +41,6 @@
 
 - (void)restoreShapes
 {
-    if (IS_UNIT_TESTING) return;
-    
     [SEShapesStorage reStoreShapes:^(NSArray *shapes) {
         if (shapes) {
             self.shapes = [shapes mutableCopy];
@@ -100,9 +98,7 @@
     
     if (needSelect) [self updateShape:shape withState:YES];
 
-    if (!IS_UNIT_TESTING) {
-        [SEShapesStorage storeShapes:self.shapes];
-    }
+    [SEShapesStorage storeShapes:self.shapes];
 }
 
 - (void)hideViewShape:(SEShape *)shape
@@ -111,9 +107,7 @@
         [self.delegate hideShapeViewWithIndex:shape.index];
     }
 
-    if (!IS_UNIT_TESTING) {
-        [SEShapesStorage storeShapes:self.shapes];
-    }
+    [SEShapesStorage storeShapes:self.shapes];
 }
 
 #pragma mark - Actions

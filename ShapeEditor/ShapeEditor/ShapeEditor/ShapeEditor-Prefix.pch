@@ -14,8 +14,6 @@
 
 #ifdef __OBJC__
 
-#define IS_UNIT_TESTING [[[NSProcessInfo processInfo] environment] objectForKey:@"UNIT_TESTS"]
-
 #endif
 
 

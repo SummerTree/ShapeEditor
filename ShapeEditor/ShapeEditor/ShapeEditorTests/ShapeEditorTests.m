@@ -8,8 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
-#import "AppDelegate.h"
-#import "EditorViewController.h"
+#import <OCMock/OCMock.h>
 
 #import "SECommandInvoker.h"
 #import "SECommandAdd.h"
@@ -26,6 +25,10 @@
 - (void)setUp {
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
+    
+    id shapeStorageMock = [OCMockObject mockForClass:[SEShapesStorage class]];
+    [[shapeStorageMock stub] storeShapes:[OCMArg any]];
+    [[shapeStorageMock stub] reStoreShapes:[OCMArg any]];
 }
 
 - (void)tearDown {
@@ -314,11 +317,11 @@
     [SEShapesStorage reStoreShapes:^(NSArray *shapes) {
         shapeRestored = [shapes lastObject];
 
-//TODO: XCTAssertEqual not work in blocks - fix it!
-        
         XCTAssertEqual([shapeRestored isEqual:shape1], true, @"restored shapes is not correct");
         XCTAssertEqual([shapeRestored isEqual:shape2], false, @"restored shapes is not correct");
     }];
+    
+    [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1.0]];
 }
 
 /*
