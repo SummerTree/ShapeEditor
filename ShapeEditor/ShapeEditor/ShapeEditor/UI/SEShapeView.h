@@ -10,6 +10,7 @@
 #import "SEWorkArea.h"
 #import "SEShape.h"
 #import "UIColor+ShapeColor.h"
+#import "SEShapeSelectionView.h"
 
 static const float kSEShapeViewRectMinWidth = 10.0f;
 static const float kSEShapeViewRectMinHeight = 10.0f;
@@ -21,23 +22,25 @@ static const float kSEShapeViewResizeAreaWidth = 30.0f;
 static const float kSEShapeViewResizeAreaHeight = 30.0f;
 
 @protocol SEShapeViewDelegate <NSObject>
+@optional
 
-- (void)shapeTapped:(SEShape *)shape selected:(BOOL)selected;
-- (void)shapeMoving:(SEShape *)shape newPosition:(CGPoint)newPosition;
-- (void)shapeMoved:(SEShape *)shape position:(CGPoint)position;
-- (void)shapeMoved:(SEShape *)shape withSize:(CGSize)size andPosition:(CGPoint)position;
+- (void)onUpdateViewWithShape:(SEShape *)shape;
+- (void)onShapeTapped:(SEShape *)shape;
+- (void)onShapeMoving:(SEShape *)shape newFrame:(CGRect)newFrame;
+- (void)didShapeMoved:(SEShape *)shape newFrame:(CGRect)newFrame;
 
 @end
 
 
-@interface SEShapeView : UIView <UIGestureRecognizerDelegate>
+@interface SEShapeView : UIView <UIGestureRecognizerDelegate, SEShapeSelectionViewDelegate>
 
 @property (nonatomic, weak) id<SEShapeViewDelegate> delegate;
+@property (nonatomic, weak) id<SEShapeViewDelegate> delegateForSel;
 @property (nonatomic, strong) SEShape *shape;
+@property (nonatomic, assign) BOOL selected;
 
 - (instancetype)initWithShape:(SEShape *)shape;
 - (void)updateViewWithShape:(SEShape *)shape;
-- (void)refreshView;
 
 //abstract
 - (BOOL)pointInsideFigure:(CGPoint)point;

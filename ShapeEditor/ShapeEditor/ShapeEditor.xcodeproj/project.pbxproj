@@ -32,8 +32,9 @@
 		F96C5EA41BD273FF008B833C /* UIView+Extended.m in Sources */ = {isa = PBXBuildFile; fileRef = F96C5EA31BD273FF008B833C /* UIView+Extended.m */; };
 		F96C5EA71BD3F79E008B833C /* SEShapesStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = F96C5EA61BD3F79E008B833C /* SEShapesStorage.m */; };
 		F96C5EAF1BD4152A008B833C /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = F96C5EAE1BD4152A008B833C /* MBProgressHUD.m */; };
-		F98C3E801BD806A6008640EF /* SEWorkAreaView.m in Sources */ = {isa = PBXBuildFile; fileRef = F98C3E7F1BD806A6008640EF /* SEWorkAreaView.m */; };
 		F98C3E8E1BDBEB09008640EF /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F98C3E831BDBEB08008640EF /* libOCMock.a */; };
+		F98C3E911BDCD7BA008640EF /* SEShapeSelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = F98C3E901BDCD7BA008640EF /* SEShapeSelectionView.m */; };
+		F9F583E01BDE66CA00D19678 /* SEWorkAreaLayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F583DF1BDE66CA00D19678 /* SEWorkAreaLayerView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,8 +96,6 @@
 		F96C5EAD1BD4152A008B833C /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		F96C5EAE1BD4152A008B833C /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		F98C3E751BD7BB67008640EF /* ShapeEditor-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ShapeEditor-Prefix.pch"; sourceTree = "<group>"; };
-		F98C3E7E1BD806A6008640EF /* SEWorkAreaView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SEWorkAreaView.h; path = UI/SEWorkAreaView.h; sourceTree = "<group>"; };
-		F98C3E7F1BD806A6008640EF /* SEWorkAreaView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SEWorkAreaView.m; path = UI/SEWorkAreaView.m; sourceTree = "<group>"; };
 		F98C3E831BDBEB08008640EF /* libOCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libOCMock.a; sourceTree = "<group>"; };
 		F98C3E851BDBEB08008640EF /* NSNotificationCenter+OCMAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotificationCenter+OCMAdditions.h"; sourceTree = "<group>"; };
 		F98C3E861BDBEB08008640EF /* OCMArg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMArg.h; sourceTree = "<group>"; };
@@ -107,6 +106,10 @@
 		F98C3E8B1BDBEB09008640EF /* OCMockObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMockObject.h; sourceTree = "<group>"; };
 		F98C3E8C1BDBEB09008640EF /* OCMRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMRecorder.h; sourceTree = "<group>"; };
 		F98C3E8D1BDBEB09008640EF /* OCMStubRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMStubRecorder.h; sourceTree = "<group>"; };
+		F98C3E8F1BDCD7BA008640EF /* SEShapeSelectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SEShapeSelectionView.h; path = UI/SEShapeSelectionView.h; sourceTree = "<group>"; };
+		F98C3E901BDCD7BA008640EF /* SEShapeSelectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SEShapeSelectionView.m; path = UI/SEShapeSelectionView.m; sourceTree = "<group>"; };
+		F9F583DE1BDE66CA00D19678 /* SEWorkAreaLayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SEWorkAreaLayerView.h; path = UI/SEWorkAreaLayerView.h; sourceTree = "<group>"; };
+		F9F583DF1BDE66CA00D19678 /* SEWorkAreaLayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SEWorkAreaLayerView.m; path = UI/SEWorkAreaLayerView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -263,8 +266,10 @@
 				F96C5E981BD2520B008B833C /* SECircleShapeView.m */,
 				F96C5E9A1BD25229008B833C /* SERectangleShapeView.h */,
 				F96C5E9B1BD25229008B833C /* SERectangleShapeView.m */,
-				F98C3E7E1BD806A6008640EF /* SEWorkAreaView.h */,
-				F98C3E7F1BD806A6008640EF /* SEWorkAreaView.m */,
+				F9F583DE1BDE66CA00D19678 /* SEWorkAreaLayerView.h */,
+				F9F583DF1BDE66CA00D19678 /* SEWorkAreaLayerView.m */,
+				F98C3E8F1BDCD7BA008640EF /* SEShapeSelectionView.h */,
+				F98C3E901BDCD7BA008640EF /* SEShapeSelectionView.m */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -435,11 +440,13 @@
 			files = (
 				F96C5E961BD24E96008B833C /* SETriangleShapeView.m in Sources */,
 				F96C5E471BCFDB8F008B833C /* EditorViewController.m in Sources */,
+				F98C3E911BDCD7BA008640EF /* SEShapeSelectionView.m in Sources */,
 				F96C5E8F1BD1263A008B833C /* SECommandModify.m in Sources */,
 				F96C5EA71BD3F79E008B833C /* SEShapesStorage.m in Sources */,
 				F96C5E891BD10095008B833C /* HStack.m in Sources */,
 				F96C5E851BD0F1D6008B833C /* SECommandRemove.m in Sources */,
 				F96C5E9C1BD25229008B833C /* SERectangleShapeView.m in Sources */,
+				F9F583E01BDE66CA00D19678 /* SEWorkAreaLayerView.m in Sources */,
 				F96C5EAF1BD4152A008B833C /* MBProgressHUD.m in Sources */,
 				F96C5E821BD0E039008B833C /* SECommandAdd.m in Sources */,
 				F96C5EA11BD26BE9008B833C /* UIColor+ShapeColor.m in Sources */,
@@ -447,7 +454,6 @@
 				F96C5E711BD025A0008B833C /* SEShape.m in Sources */,
 				F96C5E441BCFDB8F008B833C /* AppDelegate.m in Sources */,
 				F96C5E931BD13472008B833C /* SEShapeView.m in Sources */,
-				F98C3E801BD806A6008640EF /* SEWorkAreaView.m in Sources */,
 				F96C5E7D1BD026A9008B833C /* SECommandInvoker.m in Sources */,
 				F96C5E741BD025F3008B833C /* SEWorkArea.m in Sources */,
 				F96C5E991BD2520B008B833C /* SECircleShapeView.m in Sources */,

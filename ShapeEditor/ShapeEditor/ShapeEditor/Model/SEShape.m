@@ -16,10 +16,8 @@
     if (self = [super init])
     {
         _type = shapeType;
-        _size = CGSizeMake(kShapeSizeWidth, kShapeSizeHeight);
-        _position = CGPointMake(0, 0);
+        _frame = CGRectMake(0, 0, kShapeSizeWidth, kShapeSizeHeight);
         _index = 0;
-        _selected = NO;
     }
     return self;
 }
@@ -28,29 +26,42 @@
 {
     if (self = [self initWithType:shapeType])
     {
-        _position = shapePosition;
+        _frame.origin = shapePosition;
     }
     return self;
 }
 
-- (SEShape *)initWithType:(SEShapeType)shapeType size:(CGSize)shapeSize position:(CGPoint)shapePosition
+- (SEShape *)initWithType:(SEShapeType)shapeType frame:(CGRect)shapeFrame
 {
     if (self = [self initWithType:shapeType])
     {
-        _size = shapeSize;
-        _position = shapePosition;
+        _frame = shapeFrame;
     }
     return self;
 }
 
 #pragma mark - params
 
-- (NSDictionary *)paramsDict
+- (SEShapeParams)params
 {
-    return [NSDictionary dictionaryWithObjectsAndKeys:
-            [NSValue valueWithCGPoint:self.position], kSEShapeParamPosition,
-            [NSValue valueWithCGSize:self.size], kSEShapeParamSize,
-            nil];
+    SEShapeParams params;
+    params.frame = self.frame;
+    
+    return params;
+}
+
+- (void)setParams:(SEShapeParams)params
+{
+    self.frame = params.frame;
+}
+
++ (BOOL)params:(SEShapeParams)params1 equalToParams:(SEShapeParams)params2
+{
+    if (CGRectEqualToRect(params1.frame, params2.frame)) {
+        return YES;
+    }
+    
+    return NO;
 }
 
 #pragma mark - NSCoding
@@ -58,20 +69,16 @@
 - (id)initWithCoder:(NSCoder *)decoder {
     if (self = [super init]) {
         self.type = [decoder decodeIntegerForKey:@"type"];
-        self.position = [decoder decodeCGPointForKey:@"position"];
-        self.size = [decoder decodeCGSizeForKey:@"size"];
+        self.frame = [decoder decodeCGRectForKey:@"frame"];
         self.index = [decoder decodeIntegerForKey:@"index"];
-        self.selected = [decoder decodeBoolForKey:@"selected"];
     }
     return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)encoder {
     [encoder encodeInteger:self.type forKey:@"type"];
-    [encoder encodeCGPoint:self.position forKey:@"position"];
-    [encoder encodeCGSize:self.size forKey:@"size"];
+    [encoder encodeCGRect:self.frame forKey:@"frame"];
     [encoder encodeInteger:self.index forKey:@"index"];
-    [encoder encodeBool:self.selected forKey:@"selected"];
 }
 
 - (BOOL)isEqual:(id)object
@@ -79,10 +86,8 @@
     SEShape *shape = (SEShape *)object;
     
     if (shape.index == self.index &&
-        CGPointEqualToPoint(shape.position, self.position) &&
-        CGSizeEqualToSize(shape.size, self.size) &&
-        shape.type == self.type &&
-        shape.selected == self.selected) {
+        CGRectEqualToRect(shape.frame, self.frame) &&
+        shape.type == self.type) {
         return YES;
     }
     
@@ -90,20 +95,17 @@
 }
 
 - (NSUInteger)hash {
-    NSString *data = [NSString stringWithFormat:@"%lu %@ %@ %lu %d",
+    NSString *data = [NSString stringWithFormat:@"%lu %@ %lu",
                       (unsigned long)self.type,
-                      NSStringFromCGPoint(self.position),
-                      NSStringFromCGSize(self.size),
-                      (unsigned long)self.index,
-                      self.selected];
+                      NSStringFromCGRect(self.frame),
+                      (unsigned long)self.index];
     
     return [data hash];
 }
 
 - (id)copyWithZone:(NSZone *)zone
 {
-    SEShape *shape = [[SEShape allocWithZone:zone] initWithType:self.type size:self.size position:self.position];
-    shape.selected = self.selected;
+    SEShape *shape = [[SEShape allocWithZone:zone] initWithType:self.type frame:self.frame];
     shape.index = self.index;
     
     return shape;

@@ -42,22 +42,21 @@
 {
     CGSize size = CGSizeMake(24, 56);
     CGPoint position = CGPointMake(3, 5);
+    CGRect shapeFrame = CGRectMake(position.x, position.y, size.width, size.height);
 
     SEShape *shape = [[SEShape alloc] initWithType:SEShapeTypeCircle];
     XCTAssertNotNil(shape, @"nil shape instance");
-    XCTAssertEqual(shape.selected, NO, @"shape must be unselected after init");
     XCTAssertEqual(shape.index, 0, @"shape index must be equal zero after init");
     
     shape = [[SEShape alloc] initWithType:SEShapeTypeTriangle position:position];
     XCTAssertNotNil(shape, @"nil shape instance");
     XCTAssertTrue(shape.type == SEShapeTypeTriangle, @"shape type not right");
-    XCTAssertTrue(CGPointEqualToPoint(shape.position, position), @"shape position is not equal");
+    XCTAssertTrue(CGPointEqualToPoint(shape.frame.origin, position), @"shape position is not equal");
     
-    shape = [[SEShape alloc] initWithType:SEShapeTypeRectangle size:size position:position];
+    shape = [[SEShape alloc] initWithType:SEShapeTypeRectangle frame:shapeFrame];
     XCTAssertNotNil(shape, @"nil shape instance");
     XCTAssertTrue(shape.type == SEShapeTypeRectangle, @"shape type not right");
-    XCTAssertTrue(CGSizeEqualToSize(shape.size, size), @"shape size is not equal");
-    XCTAssertTrue(CGPointEqualToPoint(shape.position, position), @"shape position is not equal");
+    XCTAssertTrue(CGRectEqualToRect(shape.frame, shapeFrame), @"shape frame is not equal");
 }
 
 #pragma mark - commands
@@ -83,19 +82,17 @@
     
     CGPoint position = CGPointMake(25, 47);
     CGSize size = CGSizeMake(250, 470);
+    CGRect shapeFrame = CGRectMake(position.x, position.y, size.width, size.height);
     
-    NSDictionary *newParams = [NSDictionary dictionaryWithObjectsAndKeys:
-                            [NSValue valueWithCGPoint:position], kSEShapeParamPosition,
-                            [NSValue valueWithCGSize:size], kSEShapeParamSize,
-                            nil];
-    NSDictionary *oldParams = [shape paramsDict];
+    SEShapeParams newParams = {.frame =  shapeFrame};
+    SEShapeParams oldParams = [shape params];
     
     SECommandModify *commandModify = [[SECommandModify alloc] initWithWorkArea:workArea andShape:shape andNewParams:newParams];
     XCTAssertNotNil(commandModify, @"nil command instance");
     XCTAssertEqualObjects(shape, commandModify.shape, @"shape propery invalid");
-    XCTAssertTrue([newParams isEqualToDictionary:commandModify->_newParams], @"new params incorrect");
-    XCTAssertTrue([oldParams isEqualToDictionary:commandModify->_oldParams], @"old params incorrect");
-    XCTAssertEqual(commandModify->_type, SECommandModifyTypeSizeAndPosition, @"type param incorrect");
+    
+    XCTAssertTrue([SEShape params:newParams equalToParams:commandModify->_newParams], @"new params incorrect");
+    XCTAssertTrue([SEShape params:oldParams equalToParams:commandModify->_oldParams], @"old params incorrect");
 }
 
 
@@ -190,73 +187,11 @@
     SEShape *shape = [[SEShape alloc] initWithType:SEShapeTypeCircle];
     CGPoint position = CGPointMake(120, 130);
     CGSize size = CGSizeMake(50, 150);
+    CGRect shapeFrame = CGRectMake(position.x, position.y, size.width, size.height);
     
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            [NSValue valueWithCGPoint:position], kSEShapeParamPosition,
-                            nil];
+    SEShapeParams params = {.frame = shapeFrame};
     [workArea updateShape:shape withParams:params];
-    XCTAssertTrue(CGPointEqualToPoint(position, shape.position), @"update shape with position incorrect");
-
-    params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            [NSValue valueWithCGSize:size], kSEShapeParamSize,
-                            nil];
-    [workArea updateShape:shape withParams:params];
-    XCTAssertTrue(CGSizeEqualToSize(size, shape.size), @"update shape with size incorrect");
-    
-    
-}
-
-- (void)testWorkAreaUpdateShapeSelect
-{
-    SEWorkArea *workArea = [SEWorkArea sharedInstance];
-    SECommandInvoker *commandInvoker = [SECommandInvoker sharedInstance];
-    
-    SEShape *shape4;
-    SECommandAdd *command;
-    
-    for (int i = 0; i < 5; i++) {
-        SEShape *shape = [[SEShape alloc] initWithType:SEShapeTypeCircle];
-        command = [[SECommandAdd alloc] initWithWorkArea:workArea andShape:shape];
-        [commandInvoker addCommandAndExecute:command];
-        
-        if (i == 3) shape4 = shape;
-    }
-    
-    BOOL savedState = shape4.selected;
-    XCTAssertEqual(savedState, NO, @"default shape state incorrect");
-    
-    [workArea updateShape:shape4 withState:YES];
-    XCTAssertEqual(shape4.selected, YES, @"update shape selected state incorrect");
-    
-    for (SEShape *shape in workArea.shapes) {
-        if (shape != shape4) {
-            XCTAssertFalse(shape.selected, @"unselect other shapes incorrect");
-        }
-    }
-        
-    [workArea updateShape:shape4 withState:savedState];
-    XCTAssertEqual(shape4.selected, savedState, @"update shape selected state incorrect");
-    
-}
-
-- (void)testWorkAreaSelectedShape
-{
-    SEWorkArea *workArea = [SEWorkArea sharedInstance];
-    SECommandInvoker *commandInvoker = [SECommandInvoker sharedInstance];
-    
-    SEShape *shape4;
-    SECommandAdd *command;
-    
-    for (int i = 0; i < 5; i++) {
-        SEShape *shape = [[SEShape alloc] initWithType:SEShapeTypeCircle];
-        command = [[SECommandAdd alloc] initWithWorkArea:workArea andShape:shape];
-        [commandInvoker addCommandAndExecute:command];
-        
-        if (i == 3) shape4 = shape;
-    }
-
-    [workArea updateShape:shape4 withState:YES];
-    XCTAssertEqualObjects(shape4, [workArea selectedShape], @"selected shape incorrect");
+    XCTAssertTrue([SEShape params:shape.params equalToParams:params], @"update shape with params incorrect");
 }
 
 #pragma mark - workarea responds to commands

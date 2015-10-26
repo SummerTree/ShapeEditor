@@ -1,20 +1,19 @@
 //
-//  SEWorkAreaView.m
+//  SEWorkAreaLayerView.m
 //  ShapeEditor
 //
-//  Created by Alexander Lobanov on 21.10.15.
+//  Created by Alexander Lobanov on 26.10.15.
 //  Copyright (c) 2015 iSpring. All rights reserved.
 //
 
-#import "SEWorkAreaView.h"
-#import "SEShapeView.h"
+#import "SEWorkAreaLayerView.h"
 
-@implementation SEWorkAreaView
+@implementation SEWorkAreaLayerView
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
 {
     NSEnumerator *reverseE = [self.subviews reverseObjectEnumerator];
-    SEShapeView *iSubView;
+    UIView *iSubView;
     
     while ((iSubView = [reverseE nextObject])) {
         UIView *viewWasHit = [iSubView hitTest:[self convertPoint:point toView:iSubView] withEvent:event];
@@ -23,13 +22,14 @@
         }
     }
     
-    if ([self pointInside:point withEvent:event]) {
-        return self;
+    if (self.tag == SEWorkAreaLayerViewTagBase) {
+        if ([self pointInside:point withEvent:event]) {
+            return self;
+        }
     }
-
+    
     return nil;
 }
-
 
 /*
 // Only override drawRect: if you perform custom drawing.

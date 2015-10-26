@@ -7,6 +7,7 @@
 //
 
 #import "EditorViewController.h"
+#import "SEWorkAreaLayerView.h"
 #import "SECommandInvoker.h"
 #import "SEWorkArea.h"
 #import "SECommandAdd.h"
@@ -20,8 +21,13 @@
 @interface EditorViewController ()
 
 @property (nonatomic, strong) SECommandInvoker *commandInvoker;
+
 @property (nonatomic, strong) SEWorkArea *workArea;
 @property (weak, nonatomic) IBOutlet UIView *workAreaView;
+@property (weak, nonatomic) IBOutlet UIView *shapesLayerView;
+@property (weak, nonatomic) IBOutlet UIView *selectionLayerView;
+@property (nonatomic, weak) SEShapeSelectionView *shapeSelectionView;
+
 @property (weak, nonatomic) IBOutlet UIButton *undoButton;
 @property (weak, nonatomic) IBOutlet UIButton *redoButton;
 @property (weak, nonatomic) IBOutlet UIButton *trashButton;
@@ -36,6 +42,14 @@
     self.commandInvoker = [SECommandInvoker sharedInstance];
     self.workArea = [SEWorkArea sharedInstance];
     self.workArea.delegate = self;
+        
+    SEShapeSelectionView *view = [[SEShapeSelectionView alloc] initWithFrame:CGRectZero];
+    [self.selectionLayerView addSubview:view];
+    self.shapeSelectionView = view;
+    
+    self.shapesLayerView.tag = SEWorkAreaLayerViewTagShapes;
+    self.selectionLayerView.tag = SEWorkAreaLayerViewTagSelection;
+    
     [self initGestures];
 }
 
@@ -69,7 +83,7 @@
 
 - (void)workAreaTap:(UITapGestureRecognizer *)gesture
 {
-    [self.workArea clearSelection];
+    [self clearShapeSelection];
 }
 
 #pragma mark - Actions
@@ -79,6 +93,7 @@
     CGPoint workAreaViewCenter = CGPointMake(self.workAreaView.center.x - kShapeSizeWidth / 2.0,
                                              self.workAreaView.center.y - kShapeSizeHeight / 2.0);
     SEShape *shape = [[SEShape alloc] initWithType:shapeType position:workAreaViewCenter];
+    
     SECommandAdd *command = [[SECommandAdd alloc] initWithWorkArea:self.workArea andShape:shape];
     [self.commandInvoker addCommandAndExecute:command];
 }
@@ -112,13 +127,49 @@
     }
 }
 
+#pragma mark - shape selection
+
+- (void)selectShape:(SEShape *)shape
+{
+    SEShapeView *shapeView = [self findShapeViewWithIndex:shape.index];
+    [self.shapeSelectionView selectShapeView:shapeView];
+    if (shapeView) {
+        self.workArea.selectedShape = shape;
+    } else {
+        self.workArea.selectedShape = nil;
+    }
+    
+    [self initButtonsState];
+}
+
+- (void)clearShapeSelection
+{
+    if (self.workArea.selectedShape) {
+        self.workArea.selectedShape = nil;
+        [self.shapeSelectionView hideSelection];
+        
+        [self initButtonsState];
+    }
+}
+
+- (void)switchSelectionShape:(SEShape *)shape
+{
+    if (self.workArea.selectedShape == shape) {
+        [self clearShapeSelection];
+    } else {
+        [self selectShape:shape];
+    }
+    
+    [self initButtonsState];
+}
+
 #pragma mark - workarea control
 
 - (SEShapeView *)findShapeViewWithIndex:(NSUInteger)index
 {
     SEShapeView *shapeView = nil;
     
-    for (SEShapeView *view in [self.workAreaView subviews]) {
+    for (SEShapeView *view in self.shapesLayerView.subviews) {
         if (view.shape.index == index) {
             shapeView = view;
             break;
@@ -157,7 +208,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             SEShapeView *newShapeView = [self shapeViewForShape:shape];
             newShapeView.delegate = self;
-            [self.workAreaView addSubview:newShapeView];
+            [self.shapesLayerView addSubview:newShapeView];
         });
         
         return false;
@@ -171,39 +222,54 @@
     NSLog(@"shapes restored");
 }
 
-- (void)updateAllShapeViews
+- (void)didShapeAdded:(SEShape *)shape
 {
-    for (SEShapeView *shapeView in self.workAreaView.subviews) {
-        [shapeView refreshView];
+    //add shape view
+    SEShapeView *newShapeView = [self shapeViewForShape:shape];
+    newShapeView.delegate = self;
+    newShapeView.alpha = 0;
+    
+    NSUInteger idx = [self.shapesLayerView.subviews indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+        return ((SEShapeView *)obj).shape.index > newShapeView.shape.index;
+    }];
+    
+    if (idx == NSNotFound) {
+        [self.shapesLayerView addSubview:newShapeView];
+    } else {
+        [self.shapesLayerView insertSubview:newShapeView atIndex:idx];
     }
+    
+    [self selectShape:shape];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        newShapeView.alpha = 1;
+    }];
     
     [self initButtonsState];
 }
 
-- (void)showShapeViewWithIndex:(NSUInteger)idx
+- (void)willShapeChange:(SEShape *)shape
 {
-    SEShape *shape = [self.workArea shapeWithIndex:idx];
+    if (self.workArea.selectedShape != shape) {
+        [self selectShape:shape];
+    }
+}
+
+- (void)didShapeChanged:(SEShape *)shape
+{
     SEShapeView *shapeView = [self findShapeViewWithIndex:shape.index];
     
     if (shapeView) {
         //update shape view and redraw
         [shapeView updateViewWithShape:shape];
-    } else {
-        //add shape view
-        SEShapeView *newShapeView = [self shapeViewForShape:shape];
-        newShapeView.delegate = self;
-        newShapeView.alpha = 0;
-        [self.workAreaView addSubview:newShapeView];
-        
-        [UIView animateWithDuration:0.3 animations:^{
-            newShapeView.alpha = 1;
-        }];
     }
+    
+    [self initButtonsState];
 }
 
-- (void)hideShapeViewWithIndex:(NSUInteger)idx
+- (void)didShapeRemoved:(SEShape *)shape
 {
-    SEShapeView *shapeView = [self findShapeViewWithIndex:idx];
+    SEShapeView *shapeView = [self findShapeViewWithIndex:shape.index];
     
     [UIView animateWithDuration:0.3 animations:^{
         shapeView.alpha = 0;
@@ -213,38 +279,32 @@
     
     //find previuos command shape and select it
     SECommand *command = [self.commandInvoker previousCommand];
-    [self.workArea updateShape:command.shape withState:YES];
+    
+    if (command && command.shape != shape) {
+        [self selectShape:command.shape];
+    } else {
+        [self selectShape:[self.workArea topShape]];
+    }
 }
 
 #pragma mark - SEShapeViewDelegate
 
-- (void)shapeTapped:(SEShape *)shape selected:(BOOL)selected
+- (void)onShapeTapped:(SEShape *)shape
 {
-    [self.workArea updateShape:shape withState:selected];
+    [self switchSelectionShape:shape];
 }
 
-- (void)shapeMoving:(SEShape *)shape newPosition:(CGPoint)newPosition
+- (void)onShapeMoving:(SEShape *)shape newFrame:(CGRect)newFrame
 {
-    if (!shape.selected) {
-        [self.workArea updateShape:shape withState:YES];
+    if (self.workArea.selectedShape != shape) {
+        [self selectShape:shape];
     }
 }
 
-- (void)shapeMoved:(SEShape *)shape position:(CGPoint)position
+- (void)didShapeMoved:(SEShape *)shape newFrame:(CGRect)newFrame
 {
-    NSDictionary *params = [NSDictionary dictionaryWithObject:[NSValue valueWithCGPoint:position]
-                                                       forKey:kSEShapeParamPosition];
-    
-    SECommandModify *command = [[SECommandModify alloc] initWithWorkArea:self.workArea andShape:shape andNewParams:params];
-    [self.commandInvoker addCommandAndExecute:command];
-}
-
-- (void)shapeMoved:(SEShape *)shape withSize:(CGSize)size andPosition:(CGPoint)position
-{
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            [NSValue valueWithCGPoint:position], kSEShapeParamPosition,
-                            [NSValue valueWithCGSize:size], kSEShapeParamSize,
-                            nil];
+    SEShapeParams params;
+    params.frame = newFrame;
     
     SECommandModify *command = [[SECommandModify alloc] initWithWorkArea:self.workArea andShape:shape andNewParams:params];
     [self.commandInvoker addCommandAndExecute:command];

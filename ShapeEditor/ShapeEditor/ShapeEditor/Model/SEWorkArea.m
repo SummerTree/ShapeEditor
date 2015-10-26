@@ -69,15 +69,6 @@
     }
 }
 
-- (SEShape *)selectedShape
-{
-    NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
-        return ((SEShape *)evaluatedObject).selected == YES;
-    }];
-    
-    return [[self.shapes filteredArrayUsingPredicate:predicate] firstObject];
-}
-
 - (SEShape *)shapeWithIndex:(NSUInteger)idx
 {
     NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
@@ -87,36 +78,14 @@
     return [[self.shapes filteredArrayUsingPredicate:predicate] firstObject];
 }
 
+- (SEShape *)topShape
+{
+    return [self.shapes lastObject];
+}
+
 - (NSUInteger)nextIndexNum
 {
     return ++_maxIndexNum;
-}
-
-- (void)refreshAllShapes
-{
-    if ([self.delegate respondsToSelector:@selector(updateAllShapeViews)]) {
-        [self.delegate updateAllShapeViews];
-    }
-}
-
-- (void)showViewShape:(SEShape *)shape withSelect:(BOOL)needSelect
-{
-    if ([self.delegate respondsToSelector:@selector(showShapeViewWithIndex:)]) {
-        [self.delegate showShapeViewWithIndex:shape.index];
-    }
-    
-    if (needSelect) [self updateShape:shape withState:YES];
-
-    [SEShapesStorage storeShapes:self.shapes];
-}
-
-- (void)hideViewShape:(SEShape *)shape
-{
-    if ([self.delegate respondsToSelector:@selector(hideShapeViewWithIndex:)]) {
-        [self.delegate hideShapeViewWithIndex:shape.index];
-    }
-
-    [SEShapesStorage storeShapes:self.shapes];
 }
 
 #pragma mark - Actions
@@ -125,16 +94,25 @@
 {
     shape.index = [self nextIndexNum];
     [self.shapes addObject:shape];
-    [self showViewShape:shape withSelect:YES];
+    
+    if ([self.delegate respondsToSelector:@selector(didShapeAdded:)]) {
+        [self.delegate didShapeAdded:shape];
+    }
+    
+    [SEShapesStorage storeShapes:self.shapes];
 }
 
 - (void)removeShape:(SEShape *)shape
 {
     NSUInteger idx = [self.shapes indexOfObject:shape];
     if (idx != NSNotFound) {
-        shape.selected = NO;
         [self.shapes removeObjectAtIndex:idx];
-        [self hideViewShape:shape];
+
+        if ([self.delegate respondsToSelector:@selector(didShapeRemoved:)]) {
+            [self.delegate didShapeRemoved:shape];
+        }
+        
+        [SEShapesStorage storeShapes:self.shapes];
     }
 }
 
@@ -158,58 +136,28 @@
         [self.shapes addObject:shape];
     }
     
-    [self showViewShape:shape withSelect:YES];
-}
-
-- (void)clearSelection
-{
-    SEShape *shape = [self selectedShape];
-    if (shape) [self updateShape:shape withState:NO];
+    if ([self.delegate respondsToSelector:@selector(didShapeRemoved:)]) {
+        [self.delegate didShapeAdded:shape];
+    }
+    
+    [SEShapesStorage storeShapes:self.shapes];
 }
 
 #pragma mark - shape update
 
-- (void)updateShape:(SEShape *)shape withParams:(NSDictionary *)params
+- (void)updateShape:(SEShape *)shape withParams:(SEShapeParams)params
 {
-    NSValue *val = [params objectForKey:kSEShapeParamPosition];
-    if (val) shape.position = [val CGPointValue];
-    
-    val = [params objectForKey:kSEShapeParamSize];
-    if (val) shape.size = [val CGSizeValue];
-    
-    [self showViewShape:shape withSelect:YES];
-}
-
-- (void)updateShape:(SEShape *)shape withState:(BOOL)selected
-{
-    shape.selected = selected;
-    
-    for (SEShape *shapeObj in self.shapes) {
-        if (shape.index != shapeObj.index) {
-            shapeObj.selected = NO;
-        }
+    if ([self.delegate respondsToSelector:@selector(willShapeChange:)]) {
+        [self.delegate willShapeChange:shape];
     }
     
-    [self refreshAllShapes];
-}
-
-- (void)updateShape:(SEShape *)shape withPosition:(CGPoint)position
-{
-    shape.position = position;
-    [self showViewShape:shape withSelect:YES];
-}
-
-- (void)updateShape:(SEShape *)shape withSize:(CGSize)size
-{
-    shape.size = size;
-    [self showViewShape:shape withSelect:YES];
-}
-
-- (void)updateShape:(SEShape *)shape withSize:(CGSize)size andPosition:(CGPoint)position
-{
-    shape.size = size;
-    shape.position = position;
-    [self showViewShape:shape withSelect:YES];
+    [shape setParams:params];
+    
+    if ([self.delegate respondsToSelector:@selector(didShapeChanged:)]) {
+        [self.delegate didShapeChanged:shape];
+    }
+    
+    [SEShapesStorage storeShapes:self.shapes];
 }
 
 @end

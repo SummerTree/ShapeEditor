@@ -13,9 +13,10 @@
 
 - (void)shapesRestoreComplete;
 
-- (void)updateAllShapeViews;
-- (void)showShapeViewWithIndex:(NSUInteger)idx;
-- (void)hideShapeViewWithIndex:(NSUInteger)idx;
+- (void)didShapeAdded:(SEShape *)shape;
+- (void)didShapeRemoved:(SEShape *)shape;
+- (void)willShapeChange:(SEShape *)shape;
+- (void)didShapeChanged:(SEShape *)shape;
 
 @end
 
@@ -23,6 +24,7 @@
 @interface SEWorkArea : NSObject
 
 @property (nonatomic, weak) id<SEWorkAreaDelegate> delegate;
+@property (nonatomic, strong) SEShape *selectedShape;
 
 #ifdef UNIT_TESTS
 @property (nonatomic, strong) NSMutableArray *shapes;
@@ -34,18 +36,13 @@
 - (void)restoreShapes;
 
 - (void)enumerateShapesUsingBlock:(BOOL (^)(SEShape *shape))block;
-- (SEShape *)selectedShape;
 - (SEShape *)shapeWithIndex:(NSUInteger)idx;
+- (SEShape *)topShape;
 
 - (void)addShape:(SEShape *)shape;
 - (void)removeShape:(SEShape *)shape;
 - (void)returnShape:(SEShape *)shape;
-- (void)clearSelection;
 
-- (void)updateShape:(SEShape *)shape withParams:(NSDictionary *)params;
-- (void)updateShape:(SEShape *)shape withState:(BOOL)selected;
-- (void)updateShape:(SEShape *)shape withPosition:(CGPoint)position;
-- (void)updateShape:(SEShape *)shape withSize:(CGSize)size;
-- (void)updateShape:(SEShape *)shape withSize:(CGSize)size andPosition:(CGPoint)position;
+- (void)updateShape:(SEShape *)shape withParams:(SEShapeParams)params;
 
 @end

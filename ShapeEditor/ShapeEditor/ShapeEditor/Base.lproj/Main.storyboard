@@ -126,9 +126,29 @@
                                     <constraint firstItem="lRk-d2-ZWI" firstAttribute="top" secondItem="h0i-ee-BwI" secondAttribute="top" id="tkS-Py-pGF"/>
                                 </constraints>
                             </view>
-                            <view clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ceT-eV-ri5" userLabel="WorkAreaView" customClass="SEWorkAreaView">
+                            <view clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ceT-eV-ri5" userLabel="WorkAreaView" customClass="SEWorkAreaLayerView">
                                 <rect key="frame" x="16" y="68" width="288" height="480"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dzO-Ym-jcV" userLabel="ShapesLayerView" customClass="SEWorkAreaLayerView">
+                                        <rect key="frame" x="8" y="8" width="280" height="472"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BVn-Sf-0RI" userLabel="SelectionLayerView" customClass="SEWorkAreaLayerView">
+                                        <rect key="frame" x="4" y="4" width="280" height="472"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
                                 <color key="backgroundColor" red="0.92465672348484851" green="0.92465672348484851" blue="0.92465672348484851" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailingMargin" secondItem="dzO-Ym-jcV" secondAttribute="trailing" constant="-8" id="D1p-1c-2FT"/>
+                                    <constraint firstAttribute="bottomMargin" secondItem="BVn-Sf-0RI" secondAttribute="bottom" constant="-8" id="MPZ-4y-j2W"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="BVn-Sf-0RI" secondAttribute="trailing" constant="-8" id="c0s-Xm-ezz"/>
+                                    <constraint firstItem="BVn-Sf-0RI" firstAttribute="leading" secondItem="ceT-eV-ri5" secondAttribute="leadingMargin" constant="-8" id="gf3-4j-zLv"/>
+                                    <constraint firstItem="dzO-Ym-jcV" firstAttribute="top" secondItem="ceT-eV-ri5" secondAttribute="topMargin" constant="-7" id="hMR-fM-Wli"/>
+                                    <constraint firstItem="BVn-Sf-0RI" firstAttribute="top" secondItem="ceT-eV-ri5" secondAttribute="topMargin" constant="-7" id="nkp-J3-FMd"/>
+                                    <constraint firstItem="dzO-Ym-jcV" firstAttribute="leading" secondItem="ceT-eV-ri5" secondAttribute="leadingMargin" constant="-8" id="tve-pc-ErM"/>
+                                    <constraint firstAttribute="bottomMargin" secondItem="dzO-Ym-jcV" secondAttribute="bottom" constant="-8" id="vO2-ad-XVQ"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -145,6 +165,8 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="redoButton" destination="htp-R9-uV0" id="FkD-j0-uMi"/>
+                        <outlet property="selectionLayerView" destination="BVn-Sf-0RI" id="erE-5g-BaD"/>
+                        <outlet property="shapesLayerView" destination="dzO-Ym-jcV" id="Rph-5j-Q71"/>
                         <outlet property="trashButton" destination="yV6-7n-q9c" id="pFU-7d-hEa"/>
                         <outlet property="undoButton" destination="4dS-hC-taG" id="tVp-wx-yg7"/>
                         <outlet property="workAreaView" destination="ceT-eV-ri5" id="yQf-e3-HDc"/>

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SEWorkArea.h"
 #import "SEShapeView.h"
+#import "SEShapeSelectionView.h"
 
 @interface EditorViewController : UIViewController <SEWorkAreaDelegate, SEShapeViewDelegate>
 

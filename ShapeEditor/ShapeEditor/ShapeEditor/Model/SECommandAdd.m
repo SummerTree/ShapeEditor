@@ -14,7 +14,7 @@
 - (SECommand *)initWithWorkArea:(SEWorkArea *)workArea
                        andShape:(SEShape *)shape;
 {
-    if (self = [self init]) {
+    if (self = [super init]) {
         _workArea = workArea;
         _shape = shape;
     }

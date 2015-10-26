@@ -14,60 +14,21 @@
 
 - (SECommand *)initWithWorkArea:(SEWorkArea *)workArea
                        andShape:(SEShape *)shape
-                   andNewParams:(NSDictionary *)newParams;
+                   andNewParams:(SEShapeParams)newParams;
 {
-    if (self = [self init]) {
+    if (self = [super init]) {
         _workArea = workArea;
         _shape = shape;
         _newParams = newParams;
-        _oldParams = [shape paramsDict];
-        _type = [self modifiedTypeFromParams:newParams];
+        _oldParams = [shape params];
     }
     
     return self;
 }
 
-- (SECommandModifyType)modifiedTypeFromParams:(NSDictionary *)params
-{
-    BOOL hasPosition = [params objectForKey:kSEShapeParamPosition] != nil;
-    BOOL hasSize = [params objectForKey:kSEShapeParamSize] != nil;
-    
-    if (hasPosition && hasSize) {
-        return SECommandModifyTypeSizeAndPosition;
-    } else if (hasSize) {
-        return SECommandModifyTypeSize;
-    } else if (hasPosition) {
-        return SECommandModifyTypePosition;
-    }
-    
-    return SECommandModifyTypeNotDefined;
-}
-
 - (void)execute
 {
-    switch (_type) {
-        case SECommandModifyTypePosition:
-        {
-            CGPoint position = [[_newParams objectForKey:kSEShapeParamPosition] CGPointValue];
-            [_workArea updateShape:_shape withPosition:position];
-        }
-            break;
-        case SECommandModifyTypeSize:
-        {
-            CGSize size = [[_newParams objectForKey:kSEShapeParamSize] CGSizeValue];
-            [_workArea updateShape:_shape withSize:size];
-        }
-            break;
-        case SECommandModifyTypeSizeAndPosition:
-        {
-            CGPoint position = [[_newParams objectForKey:kSEShapeParamPosition] CGPointValue];
-            CGSize size = [[_newParams objectForKey:kSEShapeParamSize] CGSizeValue];
-            [_workArea updateShape:_shape withSize:size andPosition:position];
-        }
-            break;
-        default:
-            break;
-    }
+    [_workArea updateShape:_shape withParams:_newParams];
 }
 
 - (void)rollback

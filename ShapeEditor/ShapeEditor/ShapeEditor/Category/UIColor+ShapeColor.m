@@ -17,7 +17,7 @@
 
 + (UIColor *)shapeSelectedFillColor
 {
-    return [UIColor colorWithRed:0 green:122.0/255.0 blue:1.0 alpha:0.5];
+    return [UIColor colorWithRed:0 green:122.0/255.0 blue:1.0 alpha:0.7];
 }
 
 + (UIColor *)shapeStrokeColor

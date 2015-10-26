@@ -19,7 +19,7 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     CGContextSetLineWidth(context, 2.0);
-    UIColor *fillColor = (self.shape.selected)? [UIColor shapeSelectedFillColor]: [UIColor shapeFillColor];
+    UIColor *fillColor = (self.selected)? [UIColor shapeSelectedFillColor]: [UIColor shapeFillColor];
     CGContextSetFillColor(context, CGColorGetComponents(fillColor.CGColor));
     CGContextSetStrokeColor(context, CGColorGetComponents([UIColor shapeStrokeColor].CGColor));
     
@@ -35,7 +35,7 @@
 
 - (BOOL)pointInsideFigure:(CGPoint)point
 {
-    CGRect rect = CGRectMake(0, 0, self.shape.size.width, self.shape.size.height);
+    CGRect rect = CGRectMake(0, 0, self.shape.frame.size.width, self.shape.frame.size.height);
     CGRect figureRect = CGRectInset(rect, kSEShapeViewRectInsetDx, kSEShapeViewRectInsetDy);
     UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:figureRect];
     

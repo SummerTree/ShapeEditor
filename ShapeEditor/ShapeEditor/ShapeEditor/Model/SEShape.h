@@ -12,8 +12,9 @@
 static const float kShapeSizeWidth = 100.0f;
 static const float kShapeSizeHeight = 100.0f;
 
-static NSString *const kSEShapeParamPosition = @"position";
-static NSString *const kSEShapeParamSize = @"size";
+typedef struct {
+    CGRect frame;
+} SEShapeParams;
 
 typedef enum : NSUInteger {
     SEShapeTypeTriangle,
@@ -24,15 +25,15 @@ typedef enum : NSUInteger {
 @interface SEShape : NSObject 
 
 @property (nonatomic, assign) SEShapeType type;
-@property (nonatomic, assign) CGPoint position;
-@property (nonatomic, assign) CGSize size;
+@property (nonatomic, assign) CGRect frame;
 @property (nonatomic, assign) NSUInteger index;
-@property (nonatomic, assign) BOOL selected;
 
 - (SEShape *)initWithType:(SEShapeType)shapeType;
 - (SEShape *)initWithType:(SEShapeType)shapeType position:(CGPoint)shapePosition;
-- (SEShape *)initWithType:(SEShapeType)shapeType size:(CGSize)shapeSize position:(CGPoint)shapePosition;
+- (SEShape *)initWithType:(SEShapeType)shapeType frame:(CGRect)shapeFrame;
 
-- (NSDictionary *)paramsDict;
+- (SEShapeParams)params;
+- (void)setParams:(SEShapeParams)params;
++ (BOOL)params:(SEShapeParams)params1 equalToParams:(SEShapeParams)params2;
 
 @end

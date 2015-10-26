@@ -8,24 +8,16 @@
 
 #import "SECommand.h"
 
-typedef enum : NSUInteger {
-    SECommandModifyTypeNotDefined,
-    SECommandModifyTypePosition,
-    SECommandModifyTypeSize,
-    SECommandModifyTypeSizeAndPosition,
-} SECommandModifyType;
-
 @interface SECommandModify : SECommand {
 #ifdef UNIT_TESTS
     @public
 #endif
-    SECommandModifyType _type;
-    NSDictionary *_newParams;
-    NSDictionary *_oldParams;
+    SEShapeParams _newParams;
+    SEShapeParams _oldParams;
 }
 
 - (SECommand *)initWithWorkArea:(SEWorkArea *)workArea
                        andShape:(SEShape *)shape
-                    andNewParams:(NSDictionary *)newParams;
+                    andNewParams:(SEShapeParams)newParams;
 
 @end
