@@ -22,7 +22,6 @@ typedef enum : NSUInteger {
 - (instancetype)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
-        self.layer.zPosition = CGFLOAT_MAX;
         self.hidden = YES;
         self.opaque = NO;
         [self initResizeAreas];

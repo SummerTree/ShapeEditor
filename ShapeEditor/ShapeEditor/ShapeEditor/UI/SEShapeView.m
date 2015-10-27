@@ -23,10 +23,7 @@
 {
     if (self = [super initWithFrame:shape.frame]) {
         self.shape = shape;
-        
-        self.layer.zPosition = shape.index;
         self.opaque = NO;
-        
         [self initGestures];
     }
     
