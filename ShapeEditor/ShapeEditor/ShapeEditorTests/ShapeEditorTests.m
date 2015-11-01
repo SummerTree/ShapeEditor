@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
+#import <XCTest/XCTestCase+AsynchronousTesting.h>
 #import <OCMock/OCMock.h>
 
 #import "SECommandInvoker.h"
@@ -17,7 +18,7 @@
 #import "SEShapesStorage.h"
 
 @interface ShapeEditorTests : XCTestCase
-
+@property (nonatomic, strong) OCMockObject *shapeStorageMock;
 @end
 
 @implementation ShapeEditorTests
@@ -26,9 +27,9 @@
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
     
-    id shapeStorageMock = [OCMockObject mockForClass:[SEShapesStorage class]];
-    [[shapeStorageMock stub] storeShapes:[OCMArg any]];
-    [[shapeStorageMock stub] reStoreShapes:[OCMArg any]];
+    self.shapeStorageMock = [OCMockObject mockForClass:[SEShapesStorage class]];
+    [[self.shapeStorageMock stub] storeShapes:[OCMArg any]];
+    [[self.shapeStorageMock stub] reStoreShapes:[OCMArg any]];
 }
 
 - (void)tearDown {
@@ -230,6 +231,9 @@
 
 - (void)testShapeStoreRestore
 {
+    [self.shapeStorageMock stopMocking];
+    XCTestExpectation *expectation = [self expectationWithDescription:@"async storage"];
+    
     SEWorkArea *workArea = [SEWorkArea sharedInstance];
     SECommandInvoker *commandInvoker = [SECommandInvoker sharedInstance];
     
@@ -240,8 +244,6 @@
     //update shape with current params state
     shape1 = [shape1 copy];
 
-    [SEShapesStorage storeShapes:workArea.shapes];
-    
     SEShape *shape2 = [[SEShape alloc] initWithType:SEShapeTypeRectangle];
     command = [[SECommandAdd alloc] initWithWorkArea:workArea andShape:shape2];
     [commandInvoker addCommandAndExecute:command];
@@ -250,11 +252,15 @@
     [SEShapesStorage reStoreShapes:^(NSArray *shapes) {
         shapeRestored = [shapes lastObject];
 
-        XCTAssertEqual([shapeRestored isEqual:shape1], true, @"restored shapes is not correct");
-        XCTAssertEqual([shapeRestored isEqual:shape2], false, @"restored shapes is not correct");
+        XCTAssertEqual([shapeRestored isEqual:shape1], false, @"restored shapes is not correct");
+        XCTAssertEqual([shapeRestored isEqual:shape2], true, @"restored shapes is not correct");
+        
+        [expectation fulfill];
     }];
     
-    [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1.0]];
+    [self waitForExpectationsWithTimeout:10 handler:^(NSError *error) {
+        
+    }];
 }
 
 /*
