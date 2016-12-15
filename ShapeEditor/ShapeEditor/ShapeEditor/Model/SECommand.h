@@ -9,13 +9,18 @@
 #import <Foundation/Foundation.h>
 #import "SEWorkArea.h"
 
-@interface SECommand : NSObject {
+@protocol SECommandProtocol <NSObject>
+
+- (void)execute;
+- (void)rollback;
+
+@end
+
+@interface SECommand : NSObject <SECommandProtocol>
+{
     SEWorkArea *_workArea;
 }
 
 @property (nonatomic, strong) SEShape *shape;
-
-- (void)execute;
-- (void)rollback;
 
 @end
